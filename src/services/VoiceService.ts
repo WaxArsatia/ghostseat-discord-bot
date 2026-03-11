@@ -4,6 +4,7 @@ import {
   VoiceConnectionStatus,
   type VoiceConnection,
 } from "@discordjs/voice";
+import { MessageFlags } from "discord.js";
 import type {
   ChatInputCommandInteraction,
   Guild,
@@ -18,7 +19,7 @@ class VoiceService {
     if (!guild) {
       await interaction.reply({
         content: "This command can only be used in a server.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -28,7 +29,7 @@ class VoiceService {
     if (!voiceChannel) {
       await interaction.reply({
         content: "You must be in a voice channel to use this command.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -58,7 +59,7 @@ class VoiceService {
       this.connections.delete(guild.id);
       await interaction.reply({
         content: "Failed to join the voice channel. Please try again.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   }
@@ -68,7 +69,7 @@ class VoiceService {
     if (!guild) {
       await interaction.reply({
         content: "This command can only be used in a server.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -77,7 +78,7 @@ class VoiceService {
     if (!connection) {
       await interaction.reply({
         content: "I am not currently in a voice channel.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
