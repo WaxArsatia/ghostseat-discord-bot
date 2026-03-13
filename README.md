@@ -6,6 +6,7 @@ A simple Discord bot that silently occupies a voice channel to keep it marked as
 
 - `/voice join` — Bot joins the voice channel you are currently in and stays there permanently
 - `/voice leave` — Bot disconnects from the voice channel
+- `/game help` — Shows quick gameplay loop and how-to-play instructions
 - `/game profile` — Shows your Voicebound Arena progress, stats, and loadout
 - `/game spin [amount]` — Uses tickets to roll equipment with Epic/Legendary pity
 - `/game inventory` — Lists your owned equipment (collection mode)
@@ -68,10 +69,11 @@ You should see:
 
 1. Join any voice channel in your server
 2. Run `/voice join` — the bot joins your channel and stays
-3. Stay in a non-AFK voice channel to accumulate game progress (`1 ticket + 10 EXP / 15 minutes`)
-4. Use `/game spin`, `/game inventory`, and `/game equip` to build your loadout
-5. Use `/game duel @user` for automatic PvP and `/game leaderboard` for progression ranking
-6. Run `/voice leave` when you are done
+3. Run `/game help` if you need a quick refresher on commands and progression loop
+4. Stay in a non-AFK voice channel to accumulate game progress (`1 ticket + 10 EXP / 15 minutes`)
+5. Use `/game spin`, `/game inventory`, and `/game equip` to build your loadout
+6. Use `/game duel @user` for automatic PvP and `/game leaderboard` for progression ranking
+7. Run `/voice leave` when you are done
 
 ## Voicebound Arena MVP behavior
 

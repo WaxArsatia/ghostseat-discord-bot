@@ -29,6 +29,11 @@ export const game: Command = {
     .setName("game")
     .setDescription("Voicebound Arena commands.")
     .addSubcommand((subcommand) =>
+      subcommand
+        .setName("help")
+        .setDescription("Show quick guide and gameplay loop."),
+    )
+    .addSubcommand((subcommand) =>
       subcommand.setName("profile").setDescription("Show your game profile."),
     )
     .addSubcommand((subcommand) =>
@@ -161,6 +166,11 @@ export const game: Command = {
       const subcommand = interaction.options.getSubcommand();
 
       switch (subcommand) {
+        case "help": {
+          await handleHelpSubcommand(interaction);
+          return;
+        }
+
         case "profile": {
           await handleProfileSubcommand(interaction, guild.id);
           return;
@@ -218,6 +228,43 @@ export const game: Command = {
     }
   },
 };
+
+async function handleHelpSubcommand(
+  interaction: ChatInputCommandInteraction,
+): Promise<void> {
+  await interaction.reply({
+    embeds: [
+      new EmbedBuilder()
+        .setTitle("📘 Voicebound Arena Help")
+        .setDescription(
+          [
+            "Core loop: **Voice chat → tickets/EXP → spin gear → equip loadout → duel**.",
+            "Use this as a quick start for new players.",
+          ].join("\n"),
+        )
+        .addFields(
+          {
+            name: "How to Play",
+            value: [
+              "1. Stay in a non-AFK voice channel: **+1 ticket** and **+10 EXP** every 15 minutes.",
+              "2. Roll equipment with `/game spin [amount]` (1-10).",
+              "3. Manage loadout with `/game inventory`, `/game equip`, and `/game unequip`.",
+              "4. Duel with `/game duel @user` (winner +20 EXP, loser +10 EXP).",
+              "5. Convert extras with `/game convert [amount]` (**10 shards = 1 ticket**).",
+            ].join("\n"),
+          },
+          {
+            name: "Useful Commands",
+            value: [
+              "`/game profile` — View progress, stats, and equipped items",
+              "`/game leaderboard [limit]` — Top players by level, then EXP",
+            ].join("\n"),
+          },
+        ),
+    ],
+    flags: MessageFlags.Ephemeral,
+  });
+}
 
 async function handleProfileSubcommand(
   interaction: ChatInputCommandInteraction,
