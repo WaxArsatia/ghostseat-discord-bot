@@ -24,8 +24,10 @@ class VoiceService {
       return;
     }
 
-    const voiceChannel = guild.members.cache.get(interaction.user.id)?.voice
-      .channel;
+    const member = await guild.members
+      .fetch(interaction.user.id)
+      .catch(() => null);
+    const voiceChannel = member?.voice.channel;
     if (!voiceChannel) {
       await interaction.reply({
         content: "You must be in a voice channel to use this command.",
@@ -34,32 +36,54 @@ class VoiceService {
       return;
     }
 
+    const existingConnection = this.connections.get(guild.id);
+    if (
+      existingConnection &&
+      existingConnection.joinConfig.channelId === voiceChannel.id &&
+      existingConnection.state.status !== VoiceConnectionStatus.Destroyed
+    ) {
+      await interaction.reply({
+        content: `I'm already haunting **${voiceChannel.name}**.`,
+        flags: MessageFlags.Ephemeral,
+      });
+      return;
+    }
+
+    await interaction.deferReply();
+
     // Clean up any existing connection before joining a new channel
-    this.connections.get(guild.id)?.destroy();
+    existingConnection?.destroy();
     this.connections.delete(guild.id);
 
-    const connection = joinVoiceChannel({
-      channelId: voiceChannel.id,
-      guildId: guild.id,
-      adapterCreator: guild.voiceAdapterCreator,
-      selfDeaf: true,
-      selfMute: true,
-    });
-
-    this.connections.set(guild.id, connection);
-    this.setupAutoRejoin(connection, voiceChannel, guild);
+    let connection: VoiceConnection | undefined;
 
     try {
+      connection = joinVoiceChannel({
+        channelId: voiceChannel.id,
+        guildId: guild.id,
+        adapterCreator: guild.voiceAdapterCreator,
+        selfDeaf: true,
+        selfMute: true,
+      });
+
+      this.connections.set(guild.id, connection);
+      this.setupAutoRejoin(connection, voiceChannel, guild);
+
       await entersState(connection, VoiceConnectionStatus.Ready, 30_000);
-      await interaction.reply({
+      await interaction.editReply({
         content: `👻 Ghostseat is now haunting **${voiceChannel.name}**. Use \`/leave\` to make it vanish.`,
       });
-    } catch {
-      connection.destroy();
+    } catch (error) {
+      console.error(
+        `[VoiceService] Failed to join channel in guild ${guild.id}:`,
+        error,
+      );
+
+      connection?.destroy();
       this.connections.delete(guild.id);
-      await interaction.reply({
+
+      await interaction.editReply({
         content: "Failed to join the voice channel. Please try again.",
-        flags: MessageFlags.Ephemeral,
       });
     }
   }
@@ -91,6 +115,14 @@ class VoiceService {
     });
   }
 
+  destroyAll(): void {
+    for (const connection of this.connections.values()) {
+      connection.destroy();
+    }
+
+    this.connections.clear();
+  }
+
   private setupAutoRejoin(
     connection: VoiceConnection,
     channel: VoiceBasedChannel,
@@ -110,7 +142,7 @@ class VoiceService {
             connection.rejoin({
               channelId: channel.id,
               selfDeaf: true,
-              selfMute: false,
+              selfMute: true,
             });
           } catch {
             connection.destroy();

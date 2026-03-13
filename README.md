@@ -6,6 +6,7 @@ A simple Discord bot that silently occupies a voice channel to keep it marked as
 
 - `/join` — Bot joins the voice channel you are currently in and stays there permanently
 - `/leave` — Bot disconnects from the voice channel
+- `/leaderboard` — Shows top members by accumulated voice active time in the server
 - Auto-rejoins if it gets disconnected unexpectedly (network blip, server hiccup, etc.)
 - No audio, no noise — purely passive presence to keep the channel alive
 
@@ -65,12 +66,21 @@ You should see:
 
 1. Join any voice channel in your server
 2. Run `/join` — the bot joins your channel and stays
-3. Run `/leave` when you are done
+3. Run `/leaderboard` to see who has the highest active voice time
+4. Run `/leave` when you are done
+
+## Voice activity leaderboard behavior
+
+- Tracks each non-bot member's connected time in voice channels per server
+- Data is persisted in `data/voice-leaderboard.json`
+- Ongoing sessions are included in `/leaderboard` results in real time
+- `/leaderboard` accepts optional `limit` (1-25, default 10)
 
 ## Scripts
 
-| Command          | Description                            |
-| ---------------- | -------------------------------------- |
-| `bun start`      | Start the bot                          |
-| `bun run deploy` | Register slash commands with the guild |
-| `bun install`    | Install dependencies                   |
+| Command             | Description                            |
+| ------------------- | -------------------------------------- |
+| `bun start`         | Start the bot                          |
+| `bun run deploy`    | Register slash commands with the guild |
+| `bun run typecheck` | Run TypeScript checks                  |
+| `bun install`       | Install dependencies                   |

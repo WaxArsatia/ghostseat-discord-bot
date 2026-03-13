@@ -1,17 +1,62 @@
-import { Events } from "discord.js";
+import { Events, MessageFlags } from "discord.js";
+import type { ChatInputCommandInteraction } from "discord.js";
 import { client } from "./client.js";
 import { commands } from "../commands/index.js";
+import { voiceLeaderboardService } from "../services/VoiceLeaderboardService.js";
+
+async function replyWithCommandError(
+  interaction: ChatInputCommandInteraction,
+): Promise<void> {
+  const payload = {
+    content: "An error occurred while executing this command.",
+    flags: MessageFlags.Ephemeral,
+  } as const;
+
+  try {
+    if (interaction.replied || interaction.deferred) {
+      await interaction.followUp(payload);
+      return;
+    }
+
+    await interaction.reply(payload);
+  } catch (error) {
+    console.error("[Bot] Failed to send command error response:", error);
+  }
+}
 
 export function registerEventHandlers(): void {
   client.once(Events.ClientReady, (readyClient) => {
     console.log(`[Bot] Ready! Logged in as ${readyClient.user.tag}`);
+
+    try {
+      voiceLeaderboardService.initializeFromClient(client);
+    } catch (error) {
+      console.error(
+        "[Bot] Failed to initialize voice leaderboard state:",
+        error,
+      );
+    }
+  });
+
+  client.on(Events.VoiceStateUpdate, (oldState, newState) => {
+    try {
+      voiceLeaderboardService.handleVoiceStateUpdate(oldState, newState);
+    } catch (error) {
+      console.error("[Bot] VoiceStateUpdate handler failed:", error);
+    }
   });
 
   client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
     const command = commands.get(interaction.commandName);
-    if (!command) return;
+    if (!command) {
+      await interaction.reply({
+        content: "This command is not available right now.",
+        flags: MessageFlags.Ephemeral,
+      });
+      return;
+    }
 
     try {
       await command.execute(interaction);
@@ -21,16 +66,7 @@ export function registerEventHandlers(): void {
         error,
       );
 
-      const errorReply = {
-        content: "An error occurred while executing this command.",
-        ephemeral: true,
-      };
-
-      if (interaction.replied || interaction.deferred) {
-        await interaction.followUp(errorReply);
-      } else {
-        await interaction.reply(errorReply);
-      }
+      await replyWithCommandError(interaction);
     }
   });
 }
