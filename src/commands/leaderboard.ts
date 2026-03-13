@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
 import type { Command } from "../types/index.js";
-import { voiceLeaderboardService } from "../services/VoiceLeaderboardService.js";
+import { showVoiceLeaderboard } from "../services/VoiceLeaderboardService.js";
 
 export const leaderboard: Command = {
   data: new SlashCommandBuilder()
@@ -14,6 +14,6 @@ export const leaderboard: Command = {
         .setMaxValue(25),
     ),
   execute: async (interaction) => {
-    await voiceLeaderboardService.showLeaderboard(interaction);
+    await showVoiceLeaderboard(interaction);
   },
 };

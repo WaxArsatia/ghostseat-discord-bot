@@ -2,7 +2,10 @@ import { Events, MessageFlags } from "discord.js";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { client } from "./client.js";
 import { commands } from "../commands/index.js";
-import { voiceLeaderboardService } from "../services/VoiceLeaderboardService.js";
+import {
+  handleVoiceLeaderboardVoiceStateUpdate,
+  initializeVoiceLeaderboardFromClient,
+} from "../services/VoiceLeaderboardService.js";
 
 async function replyWithCommandError(
   interaction: ChatInputCommandInteraction,
@@ -29,7 +32,7 @@ export function registerEventHandlers(): void {
     console.log(`[Bot] Ready! Logged in as ${readyClient.user.tag}`);
 
     try {
-      voiceLeaderboardService.initializeFromClient(client);
+      initializeVoiceLeaderboardFromClient(client);
     } catch (error) {
       console.error(
         "[Bot] Failed to initialize voice leaderboard state:",
@@ -40,7 +43,7 @@ export function registerEventHandlers(): void {
 
   client.on(Events.VoiceStateUpdate, (oldState, newState) => {
     try {
-      voiceLeaderboardService.handleVoiceStateUpdate(oldState, newState);
+      handleVoiceLeaderboardVoiceStateUpdate(oldState, newState);
     } catch (error) {
       console.error("[Bot] VoiceStateUpdate handler failed:", error);
     }

@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { voiceService } from "../services/VoiceService.js";
+import { joinVoice } from "../services/VoiceService.js";
 import type { Command } from "../types/index.js";
 
 export const join: Command = {
@@ -9,6 +9,6 @@ export const join: Command = {
       "Summon Ghostseat into your voice channel. It will haunt the seat until /leave.",
     ),
   execute: async (interaction) => {
-    await voiceService.join(interaction);
+    await joinVoice(interaction);
   },
 };
