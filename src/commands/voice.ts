@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
 import { joinVoice, leaveVoice } from "../services/VoiceService.js";
-import { showVoiceLeaderboard } from "../services/VoiceLeaderboardService.js";
 import type { Command } from "../types/index.js";
 
 export const voice: Command = {
@@ -16,18 +15,6 @@ export const voice: Command = {
       subcommand
         .setName("leave")
         .setDescription("Banish Ghostseat from the voice channel."),
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("leaderboard")
-        .setDescription("Show top voice-active members in this server.")
-        .addIntegerOption((option) =>
-          option
-            .setName("limit")
-            .setDescription("How many members to show (default 10, max 25).")
-            .setMinValue(1)
-            .setMaxValue(25),
-        ),
     ),
   execute: async (interaction) => {
     const subcommand = interaction.options.getSubcommand();
@@ -39,10 +26,6 @@ export const voice: Command = {
       }
       case "leave": {
         await leaveVoice(interaction);
-        break;
-      }
-      case "leaderboard": {
-        await showVoiceLeaderboard(interaction);
         break;
       }
       default: {

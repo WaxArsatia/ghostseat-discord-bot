@@ -4,10 +4,6 @@ import { client } from "./client.js";
 import { commands } from "../commands/index.js";
 import { handleGameButtonInteraction } from "../game/application/GameInteractionHandlers.js";
 import { gameVoiceTracker } from "../game/index.js";
-import {
-  handleVoiceLeaderboardVoiceStateUpdate,
-  initializeVoiceLeaderboardFromClient,
-} from "../services/VoiceLeaderboardService.js";
 
 async function replyWithCommandError(
   interaction: ChatInputCommandInteraction,
@@ -34,15 +30,6 @@ export function registerEventHandlers(): void {
     console.log(`[Bot] Ready! Logged in as ${readyClient.user.tag}`);
 
     try {
-      initializeVoiceLeaderboardFromClient(client);
-    } catch (error) {
-      console.error(
-        "[Bot] Failed to initialize voice leaderboard state:",
-        error,
-      );
-    }
-
-    try {
       gameVoiceTracker.initializeFromClient(client);
     } catch (error) {
       console.error("[Bot] Failed to initialize game voice tracker:", error);
@@ -50,12 +37,6 @@ export function registerEventHandlers(): void {
   });
 
   client.on(Events.VoiceStateUpdate, (oldState, newState) => {
-    try {
-      handleVoiceLeaderboardVoiceStateUpdate(oldState, newState);
-    } catch (error) {
-      console.error("[Bot] VoiceStateUpdate handler failed:", error);
-    }
-
     try {
       gameVoiceTracker.handleVoiceStateUpdate(oldState, newState);
     } catch (error) {

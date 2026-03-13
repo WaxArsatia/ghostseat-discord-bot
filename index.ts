@@ -5,7 +5,6 @@ import {
   initializeGameStorage,
   shutdownGameRuntime,
 } from "./src/game/index.js";
-import { shutdownVoiceLeaderboard } from "./src/services/VoiceLeaderboardService.js";
 import { destroyAllVoiceConnections } from "./src/services/VoiceService.js";
 
 let shuttingDown = false;
@@ -18,7 +17,6 @@ async function shutdown(signal: NodeJS.Signals): Promise<void> {
 
   try {
     shutdownGameRuntime();
-    await shutdownVoiceLeaderboard();
     destroyAllVoiceConnections();
     client.destroy();
   } catch (error) {
