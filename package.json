@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "start": "bun run index.ts",
-    "deploy": "bun run src/scripts/deploy-commands.ts",
     "typecheck": "bunx tsc --noEmit"
   },
   "devDependencies": {

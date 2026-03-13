@@ -50,17 +50,13 @@ GUILD_ID=your_server_id
 
 In the Developer Portal → **OAuth2 → URL Generator**, select scopes `bot` + `applications.commands` and permissions `Connect`, `Speak`, `View Channels`. Open the generated URL and invite the bot.
 
-**4. Register slash commands**
-
-```bash
-bun run deploy
-```
-
-**5. Start the bot**
+**4. Start the bot**
 
 ```bash
 bun start
 ```
+
+The bot automatically registers slash commands during startup.
 
 You should see:
 
@@ -89,10 +85,9 @@ You should see:
 
 ## Scripts
 
-| Command                                       | Description                            |
-| --------------------------------------------- | -------------------------------------- |
-| `bun start`                                   | Start the bot                          |
-| `bun run deploy`                              | Register slash commands with the guild |
-| `bun run typecheck`                           | Run TypeScript checks                  |
-| `python src/scripts/generate_item_catalog.py` | Generate game item catalog JSON        |
-| `bun install`                                 | Install dependencies                   |
+| Command                                       | Description                     |
+| --------------------------------------------- | ------------------------------- |
+| `bun start`                                   | Start the bot                   |
+| `bun run typecheck`                           | Run TypeScript checks           |
+| `python src/scripts/generate_item_catalog.py` | Generate game item catalog JSON |
+| `bun install`                                 | Install dependencies            |

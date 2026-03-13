@@ -1,4 +1,5 @@
 import { client } from "./src/bot/client.js";
+import { deployGuildCommands } from "./src/bot/deployCommands.js";
 import { registerEventHandlers } from "./src/bot/eventHandlers.js";
 import { config } from "./src/config/env.js";
 import {
@@ -42,6 +43,7 @@ process.on("uncaughtException", (error) => {
 
 async function main(): Promise<void> {
   initializeGameStorage();
+  await deployGuildCommands();
   registerEventHandlers();
   await client.login(config.token);
 }
