@@ -1,5 +1,9 @@
 import { createGameVoiceTracker } from "./application/GameVoiceTracker.js";
-import { convertShards, spin } from "./application/EconomyUseCase.js";
+import {
+  convertShards,
+  grantTickets,
+  spin,
+} from "./application/EconomyUseCase.js";
 import {
   getDuelHistory,
   getLeaderboard,
@@ -118,6 +122,15 @@ export function createGameRuntime() {
         userId,
         shardAmount,
       ),
+    grantTickets: (guildId: string, userId: string, ticketAmount: number) =>
+      grantTickets(
+        {
+          repository,
+        },
+        guildId,
+        userId,
+        ticketAmount,
+      ),
     runDuel: (
       guildId: string,
       challengerUserId: string,
@@ -170,6 +183,7 @@ export const equipGameItem = gameRuntime.equipItem;
 export const unequipGameSlot = gameRuntime.unequipSlot;
 export const spinGame = gameRuntime.spin;
 export const convertGameShards = gameRuntime.convertShards;
+export const grantGameTickets = gameRuntime.grantTickets;
 export const runGameDuel = gameRuntime.runDuel;
 export const getGameDuelHistory = gameRuntime.getDuelHistory;
 export const getGameLeaderboard = gameRuntime.getLeaderboard;

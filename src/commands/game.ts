@@ -11,6 +11,7 @@ import type { ProfileResult } from "../game/application/ProfileUseCase.js";
 import {
   convertGameShards,
   equipGameItem,
+  grantGameTickets,
   getGameLeaderboard,
   runGameDuel,
   getGameInventory,
@@ -19,6 +20,7 @@ import {
   unequipGameSlot,
 } from "../game/index.js";
 import type { Command, EquipSlot } from "../types/index.js";
+import { isAdminUser } from "../config/admin.js";
 
 const INVENTORY_PAGE_SIZE = 10;
 
@@ -121,6 +123,29 @@ export const game: Command = {
             .setMinValue(1)
             .setMaxValue(25),
         ),
+    )
+    .addSubcommandGroup((group) =>
+      group
+        .setName("give")
+        .setDescription("Admin resource tools.")
+        .addSubcommand((subcommand) =>
+          subcommand
+            .setName("ticket")
+            .setDescription("Give tickets to a target player.")
+            .addUserOption((option) =>
+              option
+                .setName("target")
+                .setDescription("Target player")
+                .setRequired(true),
+            )
+            .addIntegerOption((option) =>
+              option
+                .setName("amount")
+                .setDescription("How many tickets to give")
+                .setRequired(true)
+                .setMinValue(1),
+            ),
+        ),
     ),
   execute: async (interaction) => {
     try {
@@ -173,6 +198,11 @@ export const game: Command = {
 
         case "leaderboard": {
           await handleLeaderboardSubcommand(interaction, guild.id);
+          return;
+        }
+
+        case "ticket": {
+          await handleGiveTicketSubcommand(interaction, guild.id);
           return;
         }
 
@@ -407,6 +437,47 @@ async function handleLeaderboardSubcommand(
         .setTitle("🏆 Voicebound Arena Leaderboard")
         .setDescription(lines.join("\n")),
     ],
+  });
+}
+
+async function handleGiveTicketSubcommand(
+  interaction: ChatInputCommandInteraction,
+  guildId: string,
+): Promise<void> {
+  const group = interaction.options.getSubcommandGroup(false);
+  if (group !== "give") {
+    await interaction.reply({
+      content: "Unknown game subcommand group.",
+      flags: MessageFlags.Ephemeral,
+    });
+    return;
+  }
+
+  if (!isAdminUser(interaction.user.id)) {
+    await interaction.reply({
+      content: "You are not allowed to use this admin command.",
+      flags: MessageFlags.Ephemeral,
+    });
+    return;
+  }
+
+  const target = interaction.options.getUser("target", true);
+  const amount = interaction.options.getInteger("amount", true);
+  const result = grantGameTickets(guildId, target.id, amount);
+
+  await interaction.reply({
+    embeds: [
+      new EmbedBuilder()
+        .setTitle("🎟️ Ticket Grant")
+        .setDescription(
+          `Gave **${result.ticketsGiven}** tickets to <@${target.id}>.`,
+        )
+        .addFields({
+          name: "Target Resources",
+          value: `Tickets: **${result.player.tickets}**\nShards: **${result.player.shards}**`,
+        }),
+    ],
+    flags: MessageFlags.Ephemeral,
   });
 }
 

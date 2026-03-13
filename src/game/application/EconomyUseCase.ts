@@ -27,6 +27,14 @@ interface EconomyDeps {
   nowIso?: () => string;
 }
 
+interface GrantTicketsDeps {
+  repository: Pick<
+    GameRepository,
+    "runInWriteTransaction" | "ensurePlayer" | "updatePlayer"
+  >;
+  nowIso?: () => string;
+}
+
 export interface SpinOutcome {
   rarity: CatalogItem["rarity"];
   item: CatalogItem;
@@ -44,6 +52,11 @@ export interface ConvertResult {
   player: PlayerProgress;
   shardsSpent: number;
   ticketsGained: number;
+}
+
+export interface GrantTicketsResult {
+  player: PlayerProgress;
+  ticketsGiven: number;
 }
 
 export function spin(
@@ -166,6 +179,31 @@ export function convertShards(
       player,
       shardsSpent: shardAmount,
       ticketsGained,
+    };
+  });
+}
+
+export function grantTickets(
+  deps: GrantTicketsDeps,
+  guildId: string,
+  userId: string,
+  ticketAmount: number,
+): GrantTicketsResult {
+  if (!Number.isInteger(ticketAmount) || ticketAmount <= 0) {
+    throw createGameUserError("Ticket amount must be a positive integer.");
+  }
+
+  const nowIso = deps.nowIso ?? defaultNowIso;
+
+  return deps.repository.runInWriteTransaction(() => {
+    const player = deps.repository.ensurePlayer(guildId, userId);
+    player.tickets += ticketAmount;
+    player.updatedAt = nowIso();
+    deps.repository.updatePlayer(player);
+
+    return {
+      player,
+      ticketsGiven: ticketAmount,
     };
   });
 }
