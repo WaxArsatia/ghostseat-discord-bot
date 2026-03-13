@@ -8,7 +8,16 @@ import {
 } from "./src/game/index.js";
 import { destroyAllVoiceConnections } from "./src/services/VoiceService.js";
 
+const COMMAND_DEPLOY_MAX_ATTEMPTS = 3;
+const COMMAND_DEPLOY_RETRY_BASE_MS = 5_000;
+
 let shuttingDown = false;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 
 async function shutdown(signal: NodeJS.Signals): Promise<void> {
   if (shuttingDown) return;
@@ -41,11 +50,39 @@ process.on("uncaughtException", (error) => {
   console.error("[Bot] Uncaught exception:", error);
 });
 
+async function deployGuildCommandsBestEffort(): Promise<void> {
+  for (let attempt = 1; attempt <= COMMAND_DEPLOY_MAX_ATTEMPTS; attempt += 1) {
+    try {
+      await deployGuildCommands();
+      return;
+    } catch (error) {
+      console.error(
+        `[Deploy] Slash command deployment attempt ${attempt}/${COMMAND_DEPLOY_MAX_ATTEMPTS} failed:`,
+        error,
+      );
+
+      const hasNextAttempt = attempt < COMMAND_DEPLOY_MAX_ATTEMPTS;
+      if (!hasNextAttempt) {
+        console.error(
+          "[Deploy] Continuing without refreshed slash commands. Run deployment manually after recovery.",
+        );
+        return;
+      }
+
+      const delayMs = COMMAND_DEPLOY_RETRY_BASE_MS * attempt;
+      console.log(
+        `[Deploy] Retrying slash command deployment in ${Math.round(delayMs / 1000)}s...`,
+      );
+      await sleep(delayMs);
+    }
+  }
+}
+
 async function main(): Promise<void> {
   initializeGameStorage();
-  await deployGuildCommands();
   registerEventHandlers();
   await client.login(config.token);
+  void deployGuildCommandsBestEffort();
 }
 
 try {

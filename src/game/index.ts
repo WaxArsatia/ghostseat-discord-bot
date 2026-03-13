@@ -36,6 +36,10 @@ export function createGameRuntime() {
         userId,
         elapsedMs,
       ),
+    getLastVoiceTickAtMs: (guildId: string, userId: string) =>
+      repository.runInReadTransaction(
+        () => repository.getVoiceProgress(guildId, userId).lastTickAtMs,
+      ),
     touchVoiceTick: (guildId: string, userId: string, tickAtMs: number) =>
       touchVoiceTick(
         {

@@ -19,7 +19,7 @@ interface CatalogReader {
 interface ProfileDeps {
   repository: Pick<
     GameRepository,
-    "runInTransaction" | "ensurePlayer" | "getLoadout"
+    "runInReadTransaction" | "ensurePlayer" | "getLoadout"
   >;
   catalog: CatalogReader;
 }
@@ -42,7 +42,7 @@ export function getProfile(
   guildId: string,
   userId: string,
 ): ProfileResult {
-  return deps.repository.runInTransaction(() =>
+  return deps.repository.runInReadTransaction(() =>
     buildProfileSnapshot(deps, guildId, userId),
   );
 }

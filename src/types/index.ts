@@ -113,7 +113,8 @@ export interface PlayerInventorySnapshot {
 
 export interface GameRepository {
   initialize(): void;
-  runInTransaction<T>(callback: () => T): T;
+  runInReadTransaction<T>(callback: () => T): T;
+  runInWriteTransaction<T>(callback: () => T): T;
   ensurePlayer(guildId: string, userId: string): PlayerProgress;
   updatePlayer(player: PlayerProgress): void;
 

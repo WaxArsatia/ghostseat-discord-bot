@@ -14,7 +14,16 @@ async function replyWithCommandError(
   } as const;
 
   try {
-    if (interaction.replied || interaction.deferred) {
+    if (interaction.deferred) {
+      await interaction.editReply({
+        content: payload.content,
+        embeds: [],
+        components: [],
+      });
+      return;
+    }
+
+    if (interaction.replied) {
       await interaction.followUp(payload);
       return;
     }
@@ -46,8 +55,44 @@ export function registerEventHandlers(): void {
 
   client.on(Events.InteractionCreate, async (interaction) => {
     if (interaction.isButton()) {
-      const handled = await handleGameButtonInteraction(interaction);
-      if (handled) {
+      try {
+        const handled = await handleGameButtonInteraction(interaction);
+        if (handled) {
+          return;
+        }
+
+        await interaction.reply({
+          content: "This interaction is no longer available.",
+          flags: MessageFlags.Ephemeral,
+        });
+        return;
+      } catch (error) {
+        console.error("[Bot] Error handling button interaction:", error);
+
+        try {
+          const payload = {
+            content: "An error occurred while handling this interaction.",
+            flags: MessageFlags.Ephemeral,
+          } as const;
+
+          if (interaction.deferred) {
+            await interaction.editReply({
+              content: payload.content,
+              embeds: [],
+              components: [],
+            });
+          } else if (interaction.replied) {
+            await interaction.followUp(payload);
+          } else {
+            await interaction.reply(payload);
+          }
+        } catch (replyError) {
+          console.error(
+            "[Bot] Failed to send button interaction error response:",
+            replyError,
+          );
+        }
+
         return;
       }
     }

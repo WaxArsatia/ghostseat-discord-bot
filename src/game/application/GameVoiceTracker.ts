@@ -6,6 +6,7 @@ interface VoiceProgressPort {
     userId: string,
     elapsedMs: number,
   ): unknown;
+  getLastVoiceTickAtMs(guildId: string, userId: string): number;
   touchVoiceTick(guildId: string, userId: string, tickAtMs: number): void;
 }
 
@@ -16,6 +17,7 @@ interface ActiveVoiceSession {
 }
 
 const TICK_MS = 60 * 1000;
+const STARTUP_RECOVERY_MAX_MS = 30 * 60 * 1000;
 
 export function createGameVoiceTracker(voiceProgress: VoiceProgressPort) {
   const activeSessions = new Map<string, ActiveVoiceSession>();
@@ -61,7 +63,40 @@ export function createGameVoiceTracker(voiceProgress: VoiceProgressPort) {
           lastAccruedAtMs: now,
         });
 
-        voiceProgress.touchVoiceTick(guild.id, voiceState.id, now);
+        try {
+          const lastTickAtMs = voiceProgress.getLastVoiceTickAtMs(
+            guild.id,
+            voiceState.id,
+          );
+          const elapsedSinceLastTick = Math.max(0, now - lastTickAtMs);
+
+          if (elapsedSinceLastTick > 0) {
+            const recoverableElapsed = Math.min(
+              elapsedSinceLastTick,
+              STARTUP_RECOVERY_MAX_MS,
+            );
+
+            voiceProgress.applyVoiceEligibleElapsed(
+              guild.id,
+              voiceState.id,
+              recoverableElapsed,
+            );
+
+            if (recoverableElapsed < elapsedSinceLastTick) {
+              const droppedMs = elapsedSinceLastTick - recoverableElapsed;
+              console.warn(
+                `[GameVoiceTracker] Startup recovery capped for ${guild.id}:${voiceState.id}; dropped ${Math.round(droppedMs / 1000)}s beyond cap.`,
+              );
+            }
+          } else {
+            voiceProgress.touchVoiceTick(guild.id, voiceState.id, now);
+          }
+        } catch (error) {
+          console.error(
+            `[GameVoiceTracker] Failed startup voice recovery for ${guild.id}:${voiceState.id}`,
+            error,
+          );
+        }
       }
     }
 

@@ -7,7 +7,7 @@ export const VOICE_EXP_PER_INTERVAL = 10;
 interface VoiceProgressDeps {
   repository: Pick<
     GameRepository,
-    | "runInTransaction"
+    | "runInWriteTransaction"
     | "ensurePlayer"
     | "getVoiceProgress"
     | "updateVoiceProgress"
@@ -37,7 +37,7 @@ export function applyVoiceEligibleElapsed(
   const nowMs = deps.nowMs ?? defaultNowMs;
   const nowIso = deps.nowIso ?? defaultNowIso;
 
-  return deps.repository.runInTransaction(() => {
+  return deps.repository.runInWriteTransaction(() => {
     const player = deps.repository.ensurePlayer(guildId, userId);
     const voiceProgress = deps.repository.getVoiceProgress(guildId, userId);
 
@@ -81,7 +81,7 @@ export function touchVoiceTick(
 ): void {
   const nowIso = deps.nowIso ?? defaultNowIso;
 
-  deps.repository.runInTransaction(() => {
+  deps.repository.runInWriteTransaction(() => {
     const voiceProgress = deps.repository.getVoiceProgress(guildId, userId);
     voiceProgress.lastTickAtMs = tickAtMs;
     voiceProgress.updatedAt = nowIso();

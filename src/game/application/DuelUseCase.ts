@@ -18,7 +18,8 @@ interface CatalogReader {
 interface DuelDeps {
   repository: Pick<
     GameRepository,
-    | "runInTransaction"
+    | "runInReadTransaction"
+    | "runInWriteTransaction"
     | "ensurePlayer"
     | "getLoadout"
     | "updatePlayer"
@@ -58,7 +59,7 @@ export function runDuel(
   const nowMs = deps.nowMs ?? defaultNowMs;
   const nowIso = deps.nowIso ?? defaultNowIso;
 
-  return deps.repository.runInTransaction(() => {
+  return deps.repository.runInWriteTransaction(() => {
     const now = nowMs();
     const playerA = deps.repository.ensurePlayer(guildId, challengerUserId);
     const playerB = deps.repository.ensurePlayer(guildId, opponentUserId);

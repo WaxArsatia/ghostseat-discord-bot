@@ -161,7 +161,12 @@ export function createSQLiteGameRepository(
     );
   }
 
-  function runInTransaction<T>(callback: () => T): T {
+  function runInReadTransaction<T>(callback: () => T): T {
+    const tx = db.transaction(callback);
+    return tx();
+  }
+
+  function runInWriteTransaction<T>(callback: () => T): T {
     const tx = db.transaction(callback);
     return tx.immediate();
   }
@@ -534,7 +539,8 @@ export function createSQLiteGameRepository(
 
   return {
     initialize,
-    runInTransaction,
+    runInReadTransaction,
+    runInWriteTransaction,
     ensurePlayer,
     updatePlayer,
     getVoiceProgress,
@@ -596,10 +602,15 @@ function mapLoadoutRow(row: LoadoutRow): EquipmentLoadout {
 }
 
 function mapMatchHistoryRow(row: MatchHistoryRow): MatchHistoryRecord {
-  const parsedLog = JSON.parse(row.battle_log) as unknown;
-  const battleLog = Array.isArray(parsedLog)
-    ? parsedLog.filter((entry): entry is string => typeof entry === "string")
-    : [];
+  let battleLog: string[] = [];
+  try {
+    const parsedLog = JSON.parse(row.battle_log) as unknown;
+    battleLog = Array.isArray(parsedLog)
+      ? parsedLog.filter((entry): entry is string => typeof entry === "string")
+      : [];
+  } catch {
+    battleLog = [];
+  }
 
   return {
     matchId: row.match_id,

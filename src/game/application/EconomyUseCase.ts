@@ -18,7 +18,7 @@ interface CatalogEconomyDeps {
 interface EconomyDeps {
   repository: Pick<
     GameRepository,
-    | "runInTransaction"
+    | "runInWriteTransaction"
     | "ensurePlayer"
     | "addInventoryOwnership"
     | "updatePlayer"
@@ -64,7 +64,7 @@ export function spin(
 
   const nowIso = deps.nowIso ?? defaultNowIso;
 
-  return deps.repository.runInTransaction(() => {
+  return deps.repository.runInWriteTransaction(() => {
     const player = deps.repository.ensurePlayer(guildId, userId);
     if (player.tickets < amount) {
       throw createGameUserError(
@@ -148,7 +148,7 @@ export function convertShards(
 
   const nowIso = deps.nowIso ?? defaultNowIso;
 
-  return deps.repository.runInTransaction(() => {
+  return deps.repository.runInWriteTransaction(() => {
     const player = deps.repository.ensurePlayer(guildId, userId);
     if (player.shards < shardAmount) {
       throw createGameUserError(

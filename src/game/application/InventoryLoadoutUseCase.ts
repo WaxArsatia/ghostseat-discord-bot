@@ -14,7 +14,8 @@ interface CatalogReader {
 interface InventoryLoadoutDeps {
   repository: Pick<
     GameRepository,
-    | "runInTransaction"
+    | "runInReadTransaction"
+    | "runInWriteTransaction"
     | "ensurePlayer"
     | "getLoadout"
     | "listInventory"
@@ -53,7 +54,7 @@ export function getInventory(
   guildId: string,
   userId: string,
 ): InventoryResult {
-  return deps.repository.runInTransaction(() => {
+  return deps.repository.runInReadTransaction(() => {
     const player = deps.repository.ensurePlayer(guildId, userId);
     const loadout = deps.repository.getLoadout(guildId, userId);
     const ownerships = deps.repository.listInventory(guildId, userId);
@@ -96,7 +97,7 @@ export function equipItem(
   slot: EquipSlot,
   itemId: string,
 ): ProfileResult {
-  return deps.repository.runInTransaction(() => {
+  return deps.repository.runInWriteTransaction(() => {
     deps.repository.ensurePlayer(guildId, userId);
     const ownerships = deps.repository.listInventory(guildId, userId);
     const ownsItem = ownerships.some(
@@ -136,7 +137,7 @@ export function unequipSlot(
   userId: string,
   slot: EquipSlot,
 ): ProfileResult {
-  return deps.repository.runInTransaction(() => {
+  return deps.repository.runInWriteTransaction(() => {
     deps.repository.ensurePlayer(guildId, userId);
     deps.repository.setLoadoutSlot(guildId, userId, slot, null);
 
