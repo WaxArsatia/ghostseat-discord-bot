@@ -3,7 +3,7 @@ import {
   buildDuelLogPagePayload,
   parseDuelLogCustomId,
 } from "./DuelLogPagination.js";
-import { gameService } from "../index.js";
+import { getGameDuelHistory } from "../index.js";
 
 export async function handleGameButtonInteraction(
   interaction: ButtonInteraction,
@@ -30,7 +30,7 @@ export async function handleGameButtonInteraction(
     return true;
   }
 
-  const history = gameService.getDuelHistory(guild.id, query.matchId);
+  const history = getGameDuelHistory(guild.id, query.matchId);
   if (!history) {
     await interaction.reply({
       content: "Duel log not found or has expired.",

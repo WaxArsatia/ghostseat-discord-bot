@@ -72,19 +72,17 @@ interface LeaderboardRow {
   exp: number;
 }
 
-export class SQLiteGameRepository implements GameRepository {
-  private readonly db: Database;
+export function createSQLiteGameRepository(
+  dbPath = resolve(process.cwd(), "data/game.sqlite"),
+): GameRepository {
+  mkdirSync(dirname(dbPath), { recursive: true });
+  const db = new Database(dbPath);
 
-  constructor(dbPath = resolve(process.cwd(), "data/game.sqlite")) {
-    mkdirSync(dirname(dbPath), { recursive: true });
-    this.db = new Database(dbPath);
-  }
+  function initialize(): void {
+    db.run("PRAGMA journal_mode = WAL;");
+    db.run("PRAGMA foreign_keys = ON;");
 
-  initialize(): void {
-    this.db.run("PRAGMA journal_mode = WAL;");
-    this.db.run("PRAGMA foreign_keys = ON;");
-
-    this.db.run(`
+    db.run(`
       CREATE TABLE IF NOT EXISTS players (
         guild_id TEXT NOT NULL,
         user_id TEXT NOT NULL,
@@ -101,7 +99,7 @@ export class SQLiteGameRepository implements GameRepository {
       )
     `);
 
-    this.db.run(`
+    db.run(`
       CREATE TABLE IF NOT EXISTS voice_progress (
         guild_id TEXT NOT NULL,
         user_id TEXT NOT NULL,
@@ -113,7 +111,7 @@ export class SQLiteGameRepository implements GameRepository {
       )
     `);
 
-    this.db.run(`
+    db.run(`
       CREATE TABLE IF NOT EXISTS inventory_ownership (
         guild_id TEXT NOT NULL,
         user_id TEXT NOT NULL,
@@ -124,7 +122,7 @@ export class SQLiteGameRepository implements GameRepository {
       )
     `);
 
-    this.db.run(`
+    db.run(`
       CREATE TABLE IF NOT EXISTS loadouts (
         guild_id TEXT NOT NULL,
         user_id TEXT NOT NULL,
@@ -137,7 +135,7 @@ export class SQLiteGameRepository implements GameRepository {
       )
     `);
 
-    this.db.run(`
+    db.run(`
       CREATE TABLE IF NOT EXISTS match_history (
         match_id TEXT PRIMARY KEY,
         guild_id TEXT NOT NULL,
@@ -155,24 +153,23 @@ export class SQLiteGameRepository implements GameRepository {
       )
     `);
 
-    this.db.run(
+    db.run(
       "CREATE INDEX IF NOT EXISTS idx_players_leaderboard ON players (guild_id, level DESC, exp DESC)",
     );
-    this.db.run(
+    db.run(
       "CREATE INDEX IF NOT EXISTS idx_match_history_guild_created ON match_history (guild_id, created_at DESC)",
     );
   }
 
-  runInTransaction<T>(callback: () => T): T {
-    const tx = this.db.transaction(callback);
+  function runInTransaction<T>(callback: () => T): T {
+    const tx = db.transaction(callback);
     return tx.immediate();
   }
 
-  ensurePlayer(guildId: string, userId: string): PlayerProgress {
+  function ensurePlayer(guildId: string, userId: string): PlayerProgress {
     const now = nowIso();
-    this.db
-      .query(
-        `
+    db.query(
+      `
           INSERT OR IGNORE INTO players (
             guild_id,
             user_id,
@@ -187,14 +184,13 @@ export class SQLiteGameRepository implements GameRepository {
             updated_at
           ) VALUES ($guildId, $userId, 1, 0, 0, 0, 0, 0, 0, $now, $now)
         `,
-      )
-      .run({
-        $guildId: guildId,
-        $userId: userId,
-        $now: now,
-      });
+    ).run({
+      $guildId: guildId,
+      $userId: userId,
+      $now: now,
+    });
 
-    const row = this.db
+    const row = db
       .query<
         PlayerRow,
         { $guildId: string; $userId: string }
@@ -211,10 +207,9 @@ export class SQLiteGameRepository implements GameRepository {
     return mapPlayerRow(row);
   }
 
-  updatePlayer(player: PlayerProgress): void {
-    this.db
-      .query(
-        `
+  function updatePlayer(player: PlayerProgress): void {
+    db.query(
+      `
           UPDATE players
           SET
             level = $level,
@@ -227,28 +222,26 @@ export class SQLiteGameRepository implements GameRepository {
             updated_at = $updatedAt
           WHERE guild_id = $guildId AND user_id = $userId
         `,
-      )
-      .run({
-        $level: player.level,
-        $exp: player.exp,
-        $tickets: player.tickets,
-        $shards: player.shards,
-        $pityEpicCounter: player.pityEpicCounter,
-        $pityLegendaryCounter: player.pityLegendaryCounter,
-        $lastDuelAtMs: player.lastDuelAtMs,
-        $updatedAt: player.updatedAt,
-        $guildId: player.guildId,
-        $userId: player.userId,
-      });
+    ).run({
+      $level: player.level,
+      $exp: player.exp,
+      $tickets: player.tickets,
+      $shards: player.shards,
+      $pityEpicCounter: player.pityEpicCounter,
+      $pityLegendaryCounter: player.pityLegendaryCounter,
+      $lastDuelAtMs: player.lastDuelAtMs,
+      $updatedAt: player.updatedAt,
+      $guildId: player.guildId,
+      $userId: player.userId,
+    });
   }
 
-  getVoiceProgress(guildId: string, userId: string): VoiceProgress {
-    this.ensurePlayer(guildId, userId);
+  function getVoiceProgress(guildId: string, userId: string): VoiceProgress {
+    ensurePlayer(guildId, userId);
 
     const now = Date.now();
-    this.db
-      .query(
-        `
+    db.query(
+      `
           INSERT OR IGNORE INTO voice_progress (
             guild_id,
             user_id,
@@ -257,15 +250,14 @@ export class SQLiteGameRepository implements GameRepository {
             updated_at
           ) VALUES ($guildId, $userId, 0, $nowMs, $nowIso)
         `,
-      )
-      .run({
-        $guildId: guildId,
-        $userId: userId,
-        $nowMs: now,
-        $nowIso: nowIso(),
-      });
+    ).run({
+      $guildId: guildId,
+      $userId: userId,
+      $nowMs: now,
+      $nowIso: nowIso(),
+    });
 
-    const row = this.db
+    const row = db
       .query<
         VoiceProgressRow,
         { $guildId: string; $userId: string }
@@ -282,10 +274,9 @@ export class SQLiteGameRepository implements GameRepository {
     return mapVoiceProgressRow(row);
   }
 
-  updateVoiceProgress(voiceProgress: VoiceProgress): void {
-    this.db
-      .query(
-        `
+  function updateVoiceProgress(voiceProgress: VoiceProgress): void {
+    db.query(
+      `
           UPDATE voice_progress
           SET
             eligible_milliseconds = $eligibleMilliseconds,
@@ -293,20 +284,22 @@ export class SQLiteGameRepository implements GameRepository {
             updated_at = $updatedAt
           WHERE guild_id = $guildId AND user_id = $userId
         `,
-      )
-      .run({
-        $eligibleMilliseconds: voiceProgress.eligibleMilliseconds,
-        $lastTickAtMs: voiceProgress.lastTickAtMs,
-        $updatedAt: voiceProgress.updatedAt,
-        $guildId: voiceProgress.guildId,
-        $userId: voiceProgress.userId,
-      });
+    ).run({
+      $eligibleMilliseconds: voiceProgress.eligibleMilliseconds,
+      $lastTickAtMs: voiceProgress.lastTickAtMs,
+      $updatedAt: voiceProgress.updatedAt,
+      $guildId: voiceProgress.guildId,
+      $userId: voiceProgress.userId,
+    });
   }
 
-  listInventory(guildId: string, userId: string): InventoryOwnership[] {
-    this.ensurePlayer(guildId, userId);
+  function listInventory(
+    guildId: string,
+    userId: string,
+  ): InventoryOwnership[] {
+    ensurePlayer(guildId, userId);
 
-    const rows = this.db
+    const rows = db
       .query<OwnershipRow, { $guildId: string; $userId: string }>(
         `
           SELECT *
@@ -323,15 +316,15 @@ export class SQLiteGameRepository implements GameRepository {
     return rows.map(mapOwnershipRow);
   }
 
-  addInventoryOwnership(
+  function addInventoryOwnership(
     guildId: string,
     userId: string,
     itemId: string,
     acquiredAt: string,
   ): boolean {
-    this.ensurePlayer(guildId, userId);
+    ensurePlayer(guildId, userId);
 
-    const result = this.db
+    const result = db
       .query(
         `
           INSERT OR IGNORE INTO inventory_ownership (
@@ -352,12 +345,11 @@ export class SQLiteGameRepository implements GameRepository {
     return result.changes > 0;
   }
 
-  getLoadout(guildId: string, userId: string): EquipmentLoadout {
-    this.ensurePlayer(guildId, userId);
+  function getLoadout(guildId: string, userId: string): EquipmentLoadout {
+    ensurePlayer(guildId, userId);
 
-    this.db
-      .query(
-        `
+    db.query(
+      `
           INSERT OR IGNORE INTO loadouts (
             guild_id,
             user_id,
@@ -367,14 +359,13 @@ export class SQLiteGameRepository implements GameRepository {
             updated_at
           ) VALUES ($guildId, $userId, NULL, NULL, NULL, $updatedAt)
         `,
-      )
-      .run({
-        $guildId: guildId,
-        $userId: userId,
-        $updatedAt: nowIso(),
-      });
+    ).run({
+      $guildId: guildId,
+      $userId: userId,
+      $updatedAt: nowIso(),
+    });
 
-    const row = this.db
+    const row = db
       .query<
         LoadoutRow,
         { $guildId: string; $userId: string }
@@ -391,70 +382,63 @@ export class SQLiteGameRepository implements GameRepository {
     return mapLoadoutRow(row);
   }
 
-  setLoadoutSlot(
+  function setLoadoutSlot(
     guildId: string,
     userId: string,
     slot: EquipSlot,
     itemId: string | null,
   ): EquipmentLoadout {
-    this.getLoadout(guildId, userId);
+    getLoadout(guildId, userId);
 
     const now = nowIso();
 
     if (slot === "weapon") {
-      this.db
-        .query(
-          `
+      db.query(
+        `
             UPDATE loadouts
             SET weapon_item_id = $itemId, updated_at = $updatedAt
             WHERE guild_id = $guildId AND user_id = $userId
           `,
-        )
-        .run({
-          $itemId: itemId,
-          $updatedAt: now,
-          $guildId: guildId,
-          $userId: userId,
-        });
+      ).run({
+        $itemId: itemId,
+        $updatedAt: now,
+        $guildId: guildId,
+        $userId: userId,
+      });
     } else if (slot === "armor") {
-      this.db
-        .query(
-          `
+      db.query(
+        `
             UPDATE loadouts
             SET armor_item_id = $itemId, updated_at = $updatedAt
             WHERE guild_id = $guildId AND user_id = $userId
           `,
-        )
-        .run({
-          $itemId: itemId,
-          $updatedAt: now,
-          $guildId: guildId,
-          $userId: userId,
-        });
+      ).run({
+        $itemId: itemId,
+        $updatedAt: now,
+        $guildId: guildId,
+        $userId: userId,
+      });
     } else {
-      this.db
-        .query(
-          `
+      db.query(
+        `
             UPDATE loadouts
             SET accessory_item_id = $itemId, updated_at = $updatedAt
             WHERE guild_id = $guildId AND user_id = $userId
           `,
-        )
-        .run({
-          $itemId: itemId,
-          $updatedAt: now,
-          $guildId: guildId,
-          $userId: userId,
-        });
+      ).run({
+        $itemId: itemId,
+        $updatedAt: now,
+        $guildId: guildId,
+        $userId: userId,
+      });
     }
 
-    return this.getLoadout(guildId, userId);
+    return getLoadout(guildId, userId);
   }
 
-  createMatchHistory(record: MatchHistoryRecord): void {
-    this.db
-      .query(
-        `
+  function createMatchHistory(record: MatchHistoryRecord): void {
+    db.query(
+      `
           INSERT INTO match_history (
             match_id,
             guild_id,
@@ -485,26 +469,28 @@ export class SQLiteGameRepository implements GameRepository {
             $createdAt
           )
         `,
-      )
-      .run({
-        $matchId: record.matchId,
-        $guildId: record.guildId,
-        $playerAUserId: record.playerAUserId,
-        $playerBUserId: record.playerBUserId,
-        $battlePowerA: record.battlePowerA,
-        $battlePowerB: record.battlePowerB,
-        $estimatedWinChanceA: record.estimatedWinChanceA,
-        $roundCount: record.roundCount,
-        $remainingHpA: record.remainingHpA,
-        $remainingHpB: record.remainingHpB,
-        $battleLog: JSON.stringify(record.battleLog),
-        $winnerUserId: record.winnerUserId,
-        $createdAt: record.createdAt,
-      });
+    ).run({
+      $matchId: record.matchId,
+      $guildId: record.guildId,
+      $playerAUserId: record.playerAUserId,
+      $playerBUserId: record.playerBUserId,
+      $battlePowerA: record.battlePowerA,
+      $battlePowerB: record.battlePowerB,
+      $estimatedWinChanceA: record.estimatedWinChanceA,
+      $roundCount: record.roundCount,
+      $remainingHpA: record.remainingHpA,
+      $remainingHpB: record.remainingHpB,
+      $battleLog: JSON.stringify(record.battleLog),
+      $winnerUserId: record.winnerUserId,
+      $createdAt: record.createdAt,
+    });
   }
 
-  getMatchHistory(guildId: string, matchId: string): MatchHistoryRecord | null {
-    const row = this.db
+  function getMatchHistory(
+    guildId: string,
+    matchId: string,
+  ): MatchHistoryRecord | null {
+    const row = db
       .query<
         MatchHistoryRow,
         { $guildId: string; $matchId: string }
@@ -521,10 +507,10 @@ export class SQLiteGameRepository implements GameRepository {
     return mapMatchHistoryRow(row);
   }
 
-  getLeaderboard(guildId: string, limit: number): LeaderboardEntry[] {
+  function getLeaderboard(guildId: string, limit: number): LeaderboardEntry[] {
     const normalizedLimit = Math.max(1, Math.min(limit, 25));
 
-    const rows = this.db
+    const rows = db
       .query<LeaderboardRow, { $guildId: string; $limit: number }>(
         `
           SELECT user_id, level, exp
@@ -545,6 +531,22 @@ export class SQLiteGameRepository implements GameRepository {
       exp: row.exp,
     }));
   }
+
+  return {
+    initialize,
+    runInTransaction,
+    ensurePlayer,
+    updatePlayer,
+    getVoiceProgress,
+    updateVoiceProgress,
+    listInventory,
+    addInventoryOwnership,
+    getLoadout,
+    setLoadoutSlot,
+    createMatchHistory,
+    getMatchHistory,
+    getLeaderboard,
+  };
 }
 
 function mapPlayerRow(row: PlayerRow): PlayerProgress {

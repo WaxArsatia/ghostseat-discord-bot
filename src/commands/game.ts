@@ -5,12 +5,19 @@ import {
   type ChatInputCommandInteraction,
 } from "discord.js";
 import { buildDuelLogPagePayload } from "../game/application/DuelLogPagination.js";
+import { type InventoryItemView } from "../game/application/InventoryLoadoutUseCase.js";
+import { isGameUserError } from "../game/application/GameErrors.js";
+import type { ProfileResult } from "../game/application/ProfileUseCase.js";
 import {
-  GameUserError,
-  type InventoryItemView,
-  type ProfileResult,
-} from "../game/application/GameService.js";
-import { gameService } from "../game/index.js";
+  convertGameShards,
+  equipGameItem,
+  getGameLeaderboard,
+  runGameDuel,
+  getGameInventory,
+  getGameProfile,
+  spinGame,
+  unequipGameSlot,
+} from "../game/index.js";
 import type { Command, EquipSlot } from "../types/index.js";
 
 const INVENTORY_PAGE_SIZE = 10;
@@ -130,234 +137,42 @@ export const game: Command = {
 
       switch (subcommand) {
         case "profile": {
-          const profile = gameService.getProfile(guild.id, interaction.user.id);
-          await interaction.reply({
-            embeds: [buildProfileEmbed(profile, interaction.user.id)],
-          });
+          await handleProfileSubcommand(interaction, guild.id);
           return;
         }
 
         case "spin": {
-          await interaction.deferReply();
-          const amount = interaction.options.getInteger("amount") ?? 1;
-          const result = gameService.spin(
-            guild.id,
-            interaction.user.id,
-            amount,
-          );
-
-          const lines = result.outcomes.map((entry, index) => {
-            const duplicateNote = entry.isDuplicate
-              ? ` (duplicate, +${entry.shardsGained} shards)`
-              : "";
-            return `${index + 1}. [${entry.rarity}] ${entry.item.name} (${entry.item.id})${duplicateNote}`;
-          });
-
-          const embed = new EmbedBuilder()
-            .setTitle("🎰 Spin Result")
-            .setDescription(lines.join("\n"))
-            .addFields(
-              {
-                name: "Resources",
-                value: `Tickets: **${result.player.tickets}**\nShards: **${result.player.shards}**`,
-                inline: true,
-              },
-              {
-                name: "Duplicate Shards",
-                value: `+${result.totalShardsGained}`,
-                inline: true,
-              },
-            );
-
-          await interaction.editReply({ embeds: [embed] });
+          await handleSpinSubcommand(interaction, guild.id);
           return;
         }
 
         case "inventory": {
-          await interaction.deferReply({ flags: MessageFlags.Ephemeral });
-          const page = Math.max(1, interaction.options.getInteger("page") ?? 1);
-          const inventory = gameService.getInventory(
-            guild.id,
-            interaction.user.id,
-          );
-
-          if (inventory.items.length === 0) {
-            await interaction.editReply({
-              embeds: [
-                new EmbedBuilder()
-                  .setTitle("🎒 Inventory")
-                  .setDescription(
-                    "You do not own any item yet. Use `/game spin` first.",
-                  ),
-              ],
-            });
-            return;
-          }
-
-          const totalPages = Math.max(
-            1,
-            Math.ceil(inventory.items.length / INVENTORY_PAGE_SIZE),
-          );
-          const currentPage = Math.min(page, totalPages);
-          const start = (currentPage - 1) * INVENTORY_PAGE_SIZE;
-          const pageItems = inventory.items.slice(
-            start,
-            start + INVENTORY_PAGE_SIZE,
-          );
-
-          const embed = new EmbedBuilder()
-            .setTitle("🎒 Inventory")
-            .setDescription(pageItems.map(formatInventoryItem).join("\n"))
-            .setFooter({ text: `Page ${currentPage}/${totalPages}` });
-
-          await interaction.editReply({ embeds: [embed] });
+          await handleInventorySubcommand(interaction, guild.id);
           return;
         }
 
         case "equip": {
-          const slot = interaction.options.getString("slot", true) as EquipSlot;
-          const itemId = interaction.options.getString("item_id", true).trim();
-          const profile = gameService.equip(
-            guild.id,
-            interaction.user.id,
-            slot,
-            itemId,
-          );
-
-          await interaction.reply({
-            embeds: [
-              buildProfileEmbed(profile, interaction.user.id).setTitle(
-                `✅ Equipped ${slot}`,
-              ),
-            ],
-            flags: MessageFlags.Ephemeral,
-          });
+          await handleEquipSubcommand(interaction, guild.id);
           return;
         }
 
         case "unequip": {
-          const slot = interaction.options.getString("slot", true) as EquipSlot;
-          const profile = gameService.unequip(
-            guild.id,
-            interaction.user.id,
-            slot,
-          );
-
-          await interaction.reply({
-            embeds: [
-              buildProfileEmbed(profile, interaction.user.id).setTitle(
-                `🧹 Unequipped ${slot}`,
-              ),
-            ],
-            flags: MessageFlags.Ephemeral,
-          });
+          await handleUnequipSubcommand(interaction, guild.id);
           return;
         }
 
         case "convert": {
-          const amount = interaction.options.getInteger("amount", true);
-          const result = gameService.convertShards(
-            guild.id,
-            interaction.user.id,
-            amount,
-          );
-
-          await interaction.reply({
-            embeds: [
-              new EmbedBuilder()
-                .setTitle("🔁 Shard Conversion")
-                .setDescription(
-                  `Converted **${result.shardsSpent}** shards into **${result.ticketsGained}** tickets.`,
-                )
-                .addFields({
-                  name: "Resources",
-                  value: `Tickets: **${result.player.tickets}**\nShards: **${result.player.shards}**`,
-                }),
-            ],
-            flags: MessageFlags.Ephemeral,
-          });
+          await handleConvertSubcommand(interaction, guild.id);
           return;
         }
 
         case "duel": {
-          const opponent = interaction.options.getUser("user", true);
-          if (opponent.bot) {
-            await interaction.reply({
-              content: "You can only duel human players.",
-              flags: MessageFlags.Ephemeral,
-            });
-            return;
-          }
-
-          await interaction.deferReply();
-          const result = gameService.runDuel(
-            guild.id,
-            interaction.user.id,
-            opponent.id,
-          );
-
-          const summaryEmbed = new EmbedBuilder()
-            .setTitle("⚔️ Duel Result")
-            .setDescription(
-              [
-                `<@${interaction.user.id}> vs <@${opponent.id}>`,
-                `Estimated win chance for <@${interaction.user.id}>: **${Math.round(result.estimatedWinChanceA * 100)}%**`,
-                `Winner: <@${result.winnerUserId}>`,
-                `Rounds: **${result.roundCount}**`,
-              ].join("\n"),
-            )
-            .addFields(
-              {
-                name: `<@${interaction.user.id}>`,
-                value: `BP: **${result.statsA.battlePower}**\nFinal HP: **${result.remainingHpA}**`,
-                inline: true,
-              },
-              {
-                name: `<@${opponent.id}>`,
-                value: `BP: **${result.statsB.battlePower}**\nFinal HP: **${result.remainingHpB}**`,
-                inline: true,
-              },
-            );
-
-          await interaction.editReply({ embeds: [summaryEmbed] });
-
-          const payload = buildDuelLogPagePayload(result.logs, {
-            matchId: result.matchId,
-            viewerUserId: interaction.user.id,
-            page: 0,
-          });
-
-          await interaction.followUp({
-            ...payload,
-            flags: MessageFlags.Ephemeral,
-          });
+          await handleDuelSubcommand(interaction, guild.id);
           return;
         }
 
         case "leaderboard": {
-          const limit = interaction.options.getInteger("limit") ?? 10;
-          const leaderboard = gameService.getLeaderboard(guild.id, limit);
-
-          if (leaderboard.length === 0) {
-            await interaction.reply({
-              content: "No game progress recorded yet in this server.",
-              flags: MessageFlags.Ephemeral,
-            });
-            return;
-          }
-
-          const lines = leaderboard.map(
-            (entry, index) =>
-              `${index + 1}. <@${entry.userId}> — Lv **${entry.level}** (EXP ${entry.exp})`,
-          );
-
-          await interaction.reply({
-            embeds: [
-              new EmbedBuilder()
-                .setTitle("🏆 Voicebound Arena Leaderboard")
-                .setDescription(lines.join("\n")),
-            ],
-          });
+          await handleLeaderboardSubcommand(interaction, guild.id);
           return;
         }
 
@@ -373,6 +188,227 @@ export const game: Command = {
     }
   },
 };
+
+async function handleProfileSubcommand(
+  interaction: ChatInputCommandInteraction,
+  guildId: string,
+): Promise<void> {
+  const profile = getGameProfile(guildId, interaction.user.id);
+  await interaction.reply({
+    embeds: [buildProfileEmbed(profile, interaction.user.id)],
+  });
+}
+
+async function handleSpinSubcommand(
+  interaction: ChatInputCommandInteraction,
+  guildId: string,
+): Promise<void> {
+  await interaction.deferReply();
+  const amount = interaction.options.getInteger("amount") ?? 1;
+  const result = spinGame(guildId, interaction.user.id, amount);
+
+  const lines = result.outcomes.map((entry, index) => {
+    const duplicateNote = entry.isDuplicate
+      ? ` (duplicate, +${entry.shardsGained} shards)`
+      : "";
+    return `${index + 1}. [${entry.rarity}] ${entry.item.name} (${entry.item.id})${duplicateNote}`;
+  });
+
+  const embed = new EmbedBuilder()
+    .setTitle("🎰 Spin Result")
+    .setDescription(lines.join("\n"))
+    .addFields(
+      {
+        name: "Resources",
+        value: `Tickets: **${result.player.tickets}**\nShards: **${result.player.shards}**`,
+        inline: true,
+      },
+      {
+        name: "Duplicate Shards",
+        value: `+${result.totalShardsGained}`,
+        inline: true,
+      },
+    );
+
+  await interaction.editReply({ embeds: [embed] });
+}
+
+async function handleInventorySubcommand(
+  interaction: ChatInputCommandInteraction,
+  guildId: string,
+): Promise<void> {
+  await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+  const page = Math.max(1, interaction.options.getInteger("page") ?? 1);
+  const inventory = getGameInventory(guildId, interaction.user.id);
+
+  if (inventory.items.length === 0) {
+    await interaction.editReply({
+      embeds: [
+        new EmbedBuilder()
+          .setTitle("🎒 Inventory")
+          .setDescription(
+            "You do not own any item yet. Use `/game spin` first.",
+          ),
+      ],
+    });
+    return;
+  }
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(inventory.items.length / INVENTORY_PAGE_SIZE),
+  );
+  const currentPage = Math.min(page, totalPages);
+  const start = (currentPage - 1) * INVENTORY_PAGE_SIZE;
+  const pageItems = inventory.items.slice(start, start + INVENTORY_PAGE_SIZE);
+
+  const embed = new EmbedBuilder()
+    .setTitle("🎒 Inventory")
+    .setDescription(pageItems.map(formatInventoryItem).join("\n"))
+    .setFooter({ text: `Page ${currentPage}/${totalPages}` });
+
+  await interaction.editReply({ embeds: [embed] });
+}
+
+async function handleEquipSubcommand(
+  interaction: ChatInputCommandInteraction,
+  guildId: string,
+): Promise<void> {
+  const slot = interaction.options.getString("slot", true) as EquipSlot;
+  const itemId = interaction.options.getString("item_id", true).trim();
+  const profile = equipGameItem(guildId, interaction.user.id, slot, itemId);
+
+  await interaction.reply({
+    embeds: [
+      buildProfileEmbed(profile, interaction.user.id).setTitle(
+        `✅ Equipped ${slot}`,
+      ),
+    ],
+    flags: MessageFlags.Ephemeral,
+  });
+}
+
+async function handleUnequipSubcommand(
+  interaction: ChatInputCommandInteraction,
+  guildId: string,
+): Promise<void> {
+  const slot = interaction.options.getString("slot", true) as EquipSlot;
+  const profile = unequipGameSlot(guildId, interaction.user.id, slot);
+
+  await interaction.reply({
+    embeds: [
+      buildProfileEmbed(profile, interaction.user.id).setTitle(
+        `🧹 Unequipped ${slot}`,
+      ),
+    ],
+    flags: MessageFlags.Ephemeral,
+  });
+}
+
+async function handleConvertSubcommand(
+  interaction: ChatInputCommandInteraction,
+  guildId: string,
+): Promise<void> {
+  const amount = interaction.options.getInteger("amount", true);
+  const result = convertGameShards(guildId, interaction.user.id, amount);
+
+  await interaction.reply({
+    embeds: [
+      new EmbedBuilder()
+        .setTitle("🔁 Shard Conversion")
+        .setDescription(
+          `Converted **${result.shardsSpent}** shards into **${result.ticketsGained}** tickets.`,
+        )
+        .addFields({
+          name: "Resources",
+          value: `Tickets: **${result.player.tickets}**\nShards: **${result.player.shards}**`,
+        }),
+    ],
+    flags: MessageFlags.Ephemeral,
+  });
+}
+
+async function handleDuelSubcommand(
+  interaction: ChatInputCommandInteraction,
+  guildId: string,
+): Promise<void> {
+  const opponent = interaction.options.getUser("user", true);
+  if (opponent.bot) {
+    await interaction.reply({
+      content: "You can only duel human players.",
+      flags: MessageFlags.Ephemeral,
+    });
+    return;
+  }
+
+  await interaction.deferReply();
+  const result = runGameDuel(guildId, interaction.user.id, opponent.id);
+
+  const summaryEmbed = new EmbedBuilder()
+    .setTitle("⚔️ Duel Result")
+    .setDescription(
+      [
+        `<@${interaction.user.id}> vs <@${opponent.id}>`,
+        `Estimated win chance for <@${interaction.user.id}>: **${Math.round(result.estimatedWinChanceA * 100)}%**`,
+        `Winner: <@${result.winnerUserId}>`,
+        `Rounds: **${result.roundCount}**`,
+      ].join("\n"),
+    )
+    .addFields(
+      {
+        name: `<@${interaction.user.id}>`,
+        value: `BP: **${result.statsA.battlePower}**\nFinal HP: **${result.remainingHpA}**`,
+        inline: true,
+      },
+      {
+        name: `<@${opponent.id}>`,
+        value: `BP: **${result.statsB.battlePower}**\nFinal HP: **${result.remainingHpB}**`,
+        inline: true,
+      },
+    );
+
+  await interaction.editReply({ embeds: [summaryEmbed] });
+
+  const payload = buildDuelLogPagePayload(result.logs, {
+    matchId: result.matchId,
+    viewerUserId: interaction.user.id,
+    page: 0,
+  });
+
+  await interaction.followUp({
+    ...payload,
+    flags: MessageFlags.Ephemeral,
+  });
+}
+
+async function handleLeaderboardSubcommand(
+  interaction: ChatInputCommandInteraction,
+  guildId: string,
+): Promise<void> {
+  const limit = interaction.options.getInteger("limit") ?? 10;
+  const leaderboard = getGameLeaderboard(guildId, limit);
+
+  if (leaderboard.length === 0) {
+    await interaction.reply({
+      content: "No game progress recorded yet in this server.",
+      flags: MessageFlags.Ephemeral,
+    });
+    return;
+  }
+
+  const lines = leaderboard.map(
+    (entry, index) =>
+      `${index + 1}. <@${entry.userId}> — Lv **${entry.level}** (EXP ${entry.exp})`,
+  );
+
+  await interaction.reply({
+    embeds: [
+      new EmbedBuilder()
+        .setTitle("🏆 Voicebound Arena Leaderboard")
+        .setDescription(lines.join("\n")),
+    ],
+  });
+}
 
 function buildProfileEmbed(
   profile: ProfileResult,
@@ -440,12 +476,12 @@ async function replyWithGameError(
   interaction: ChatInputCommandInteraction,
   error: unknown,
 ): Promise<void> {
-  const message =
-    error instanceof GameUserError
-      ? error.userMessage
-      : "An error occurred while processing this game command.";
+  const userError = isGameUserError(error);
+  const message = userError
+    ? error.userMessage
+    : "An error occurred while processing this game command.";
 
-  if (!(error instanceof GameUserError)) {
+  if (!userError) {
     console.error("[GameCommand] Unhandled error:", error);
   }
 

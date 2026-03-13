@@ -15,62 +15,69 @@ const shardByRarity: Record<ItemRarity, number> = {
   Legendary: 25,
 };
 
-export class GameCatalog {
-  private readonly itemsById: Map<string, CatalogItem>;
-  private readonly itemsByRarity: Record<ItemRarity, CatalogItem[]>;
+export interface GameCatalog {
+  getById(itemId: string): CatalogItem | null;
+  pickRandomByRarity(rarity: ItemRarity): CatalogItem;
+  getShardValue(rarity: ItemRarity): number;
+  getManyById(itemIds: string[]): CatalogItem[];
+}
 
-  constructor(items: CatalogItem[]) {
-    this.itemsById = new Map(items.map((item) => [item.id, item]));
-    this.itemsByRarity = {
-      Common: [],
-      Rare: [],
-      Epic: [],
-      Legendary: [],
-    };
+export function createGameCatalog(items: CatalogItem[]): GameCatalog {
+  const itemsById = new Map(items.map((item) => [item.id, item]));
+  const itemsByRarity: Record<ItemRarity, CatalogItem[]> = {
+    Common: [],
+    Rare: [],
+    Epic: [],
+    Legendary: [],
+  };
 
-    for (const item of items) {
-      this.itemsByRarity[item.rarity].push(item);
-    }
+  for (const item of items) {
+    itemsByRarity[item.rarity].push(item);
+  }
 
-    for (const rarity of Object.keys(this.itemsByRarity) as ItemRarity[]) {
-      if (this.itemsByRarity[rarity].length === 0) {
-        throw new Error(
-          `[GameCatalog] Missing item pool for rarity: ${rarity}`,
-        );
-      }
+  for (const rarity of Object.keys(itemsByRarity) as ItemRarity[]) {
+    if (itemsByRarity[rarity].length === 0) {
+      throw new Error(`[GameCatalog] Missing item pool for rarity: ${rarity}`);
     }
   }
 
-  static load(): GameCatalog {
-    const raw = readFileSync(CATALOG_PATH, "utf8");
-    const parsed = JSON.parse(raw) as Partial<CatalogFile>;
+  const getById = (itemId: string): CatalogItem | null => {
+    return itemsById.get(itemId) ?? null;
+  };
 
-    if (!Array.isArray(parsed.items) || parsed.items.length === 0) {
-      throw new Error("[GameCatalog] item catalog is empty or invalid");
-    }
-
-    return new GameCatalog(parsed.items);
-  }
-
-  getById(itemId: string): CatalogItem | null {
-    return this.itemsById.get(itemId) ?? null;
-  }
-
-  pickRandomByRarity(rarity: ItemRarity): CatalogItem {
-    const pool = this.itemsByRarity[rarity];
+  const pickRandomByRarity = (rarity: ItemRarity): CatalogItem => {
+    const pool = itemsByRarity[rarity];
     const index = Math.floor(Math.random() * pool.length);
     return pool[index] as CatalogItem;
-  }
+  };
 
-  getShardValue(rarity: ItemRarity): number {
+  const getShardValue = (rarity: ItemRarity): number => {
     return shardByRarity[rarity];
+  };
+
+  const getManyById = (itemIds: string[]): CatalogItem[] => {
+    return itemIds
+      .map((itemId) => getById(itemId))
+      .filter((item): item is CatalogItem => item !== null);
+  };
+
+  return {
+    getById,
+    pickRandomByRarity,
+    getShardValue,
+    getManyById,
+  };
+}
+
+export function loadGameCatalog(): GameCatalog {
+  const raw = readFileSync(CATALOG_PATH, "utf8");
+  const parsed = JSON.parse(raw) as Partial<CatalogFile>;
+
+  if (!Array.isArray(parsed.items) || parsed.items.length === 0) {
+    throw new Error("[GameCatalog] item catalog is empty or invalid");
   }
 
-  getManyById(itemIds: string[]): CatalogItem[] {
-    return itemIds
-      .map((itemId) => this.getById(itemId))
-      .filter((item): item is CatalogItem => item !== null);
-  }
+  return createGameCatalog(parsed.items);
 }
 
 export function rollRarity(
