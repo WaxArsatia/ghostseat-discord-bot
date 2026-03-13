@@ -71,7 +71,7 @@ export async function joinVoice(
 
     await entersState(connection, VoiceConnectionStatus.Ready, 30_000);
     await interaction.editReply({
-      content: `👻 Ghostseat is now haunting **${voiceChannel.name}**. Use \`/leave\` to make it vanish.`,
+      content: `👻 Ghostseat is now haunting **${voiceChannel.name}**. Use \`/voice leave\` to make it vanish.`,
     });
   } catch (error) {
     console.error(
