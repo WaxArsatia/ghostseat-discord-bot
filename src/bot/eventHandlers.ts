@@ -2,6 +2,8 @@ import { Events, MessageFlags } from "discord.js";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { client } from "./client.js";
 import { commands } from "../commands/index.js";
+import { handleGameButtonInteraction } from "../game/application/GameInteractionHandlers.js";
+import { gameVoiceTracker } from "../game/index.js";
 import {
   handleVoiceLeaderboardVoiceStateUpdate,
   initializeVoiceLeaderboardFromClient,
@@ -39,6 +41,12 @@ export function registerEventHandlers(): void {
         error,
       );
     }
+
+    try {
+      gameVoiceTracker.initializeFromClient(client);
+    } catch (error) {
+      console.error("[Bot] Failed to initialize game voice tracker:", error);
+    }
   });
 
   client.on(Events.VoiceStateUpdate, (oldState, newState) => {
@@ -47,9 +55,22 @@ export function registerEventHandlers(): void {
     } catch (error) {
       console.error("[Bot] VoiceStateUpdate handler failed:", error);
     }
+
+    try {
+      gameVoiceTracker.handleVoiceStateUpdate(oldState, newState);
+    } catch (error) {
+      console.error("[Bot] Game voice tracker handler failed:", error);
+    }
   });
 
   client.on(Events.InteractionCreate, async (interaction) => {
+    if (interaction.isButton()) {
+      const handled = await handleGameButtonInteraction(interaction);
+      if (handled) {
+        return;
+      }
+    }
+
     if (!interaction.isChatInputCommand()) return;
 
     const command = commands.get(interaction.commandName);

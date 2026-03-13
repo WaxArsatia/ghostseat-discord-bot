@@ -1,0 +1,3045 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-03-13T16:59:55.113981+00:00",
+  "seed": 20260313,
+  "rules": {
+    "rarityRate": {
+      "Common": 0.7,
+      "Rare": 0.22,
+      "Epic": 0.07,
+      "Legendary": 0.01
+    },
+    "perCategory": 100
+  },
+  "summary": {
+    "Weapon": {
+      "total": 100,
+      "rarity": {
+        "Common": 70,
+        "Epic": 7,
+        "Legendary": 1,
+        "Rare": 22
+      }
+    },
+    "Armor": {
+      "total": 100,
+      "rarity": {
+        "Common": 70,
+        "Epic": 7,
+        "Legendary": 1,
+        "Rare": 22
+      }
+    },
+    "Accessory": {
+      "total": 100,
+      "rarity": {
+        "Common": 70,
+        "Epic": 7,
+        "Legendary": 1,
+        "Rare": 22
+      }
+    }
+  },
+  "items": [
+    {
+      "id": "weapon-001",
+      "name": "Plain Iron Saber of Echo",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 19,
+      "hp": 12,
+      "spd": 6,
+      "def": 8
+    },
+    {
+      "id": "weapon-002",
+      "name": "Plain Ash Glaive of Ember",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 21,
+      "hp": 8,
+      "spd": 6,
+      "def": 6
+    },
+    {
+      "id": "weapon-003",
+      "name": "Plain Storm Mace of Ruin",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 21,
+      "hp": 7,
+      "spd": 9,
+      "def": 6
+    },
+    {
+      "id": "weapon-004",
+      "name": "Refined Night Pike of Trial",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 27,
+      "hp": 3,
+      "spd": 7,
+      "def": 2
+    },
+    {
+      "id": "weapon-005",
+      "name": "Plain Crimson Hammer of Valor",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 13,
+      "spd": 7,
+      "def": 0
+    },
+    {
+      "id": "weapon-006",
+      "name": "Plain Frost Saber of Fury",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 20,
+      "hp": 20,
+      "spd": 3,
+      "def": 2
+    },
+    {
+      "id": "weapon-007",
+      "name": "Refined Solar Glaive of Breakers",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 26,
+      "hp": 23,
+      "spd": 8,
+      "def": 3
+    },
+    {
+      "id": "weapon-008",
+      "name": "Plain Lunar Mace of Nightfall",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 18,
+      "hp": 15,
+      "spd": 7,
+      "def": 0
+    },
+    {
+      "id": "weapon-009",
+      "name": "Plain Wild Pike of Sparks",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 25,
+      "hp": 10,
+      "spd": 8,
+      "def": 2
+    },
+    {
+      "id": "weapon-010",
+      "name": "Plain Tempest Hammer of Dawn",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 17,
+      "hp": 2,
+      "spd": 7,
+      "def": 4
+    },
+    {
+      "id": "weapon-011",
+      "name": "Plain Twin Saber of Tempest",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 21,
+      "hp": 18,
+      "spd": 6,
+      "def": 2
+    },
+    {
+      "id": "weapon-012",
+      "name": "Plain Dawn Glaive of Echo",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 22,
+      "hp": 7,
+      "spd": 10,
+      "def": 5
+    },
+    {
+      "id": "weapon-013",
+      "name": "Plain Dusk Mace of Oath",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 19,
+      "hp": 0,
+      "spd": 6,
+      "def": 5
+    },
+    {
+      "id": "weapon-014",
+      "name": "Mythic Void Pike of Breakers",
+      "type": "Weapon",
+      "rarity": "Epic",
+      "atk": 36,
+      "hp": 12,
+      "spd": 4,
+      "def": 9
+    },
+    {
+      "id": "weapon-015",
+      "name": "Plain Rift Hammer of Tides",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 25,
+      "hp": 19,
+      "spd": 9,
+      "def": 1
+    },
+    {
+      "id": "weapon-016",
+      "name": "Plain Phantom Saber of Resolve",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 11,
+      "spd": 3,
+      "def": 2
+    },
+    {
+      "id": "weapon-017",
+      "name": "Plain Ember Glaive of Ember",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 20,
+      "hp": 16,
+      "spd": 4,
+      "def": 3
+    },
+    {
+      "id": "weapon-018",
+      "name": "Plain Granite Mace of Ruin",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 7,
+      "spd": 4,
+      "def": 5
+    },
+    {
+      "id": "weapon-019",
+      "name": "Plain Crimson Pike of Trial",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 18,
+      "hp": 19,
+      "spd": 10,
+      "def": 1
+    },
+    {
+      "id": "weapon-020",
+      "name": "Refined Cinder Hammer of Valor",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 30,
+      "hp": 1,
+      "spd": 7,
+      "def": 7
+    },
+    {
+      "id": "weapon-021",
+      "name": "Plain Iron Saber of Fury",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 12,
+      "spd": 6,
+      "def": 5
+    },
+    {
+      "id": "weapon-022",
+      "name": "Ascendant Ash Glaive of Breakers",
+      "type": "Weapon",
+      "rarity": "Legendary",
+      "atk": 41,
+      "hp": 28,
+      "spd": 12,
+      "def": 7
+    },
+    {
+      "id": "weapon-023",
+      "name": "Plain Storm Mace of Nightfall",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 24,
+      "hp": 6,
+      "spd": 2,
+      "def": 0
+    },
+    {
+      "id": "weapon-024",
+      "name": "Refined Night Pike of Sparks",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 28,
+      "hp": 21,
+      "spd": 12,
+      "def": 8
+    },
+    {
+      "id": "weapon-025",
+      "name": "Plain Crimson Hammer of Dawn",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 26,
+      "hp": 17,
+      "spd": 4,
+      "def": 7
+    },
+    {
+      "id": "weapon-026",
+      "name": "Plain Frost Saber of Tempest",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 21,
+      "hp": 7,
+      "spd": 9,
+      "def": 1
+    },
+    {
+      "id": "weapon-027",
+      "name": "Plain Solar Glaive of Dawn",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 18,
+      "spd": 9,
+      "def": 7
+    },
+    {
+      "id": "weapon-028",
+      "name": "Plain Night Mace of Oath",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 18,
+      "hp": 14,
+      "spd": 10,
+      "def": 7
+    },
+    {
+      "id": "weapon-029",
+      "name": "Plain Wild Pike of Gale",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 22,
+      "hp": 15,
+      "spd": 10,
+      "def": 5
+    },
+    {
+      "id": "weapon-030",
+      "name": "Plain Runic Hammer of Tides",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 18,
+      "hp": 9,
+      "spd": 2,
+      "def": 0
+    },
+    {
+      "id": "weapon-031",
+      "name": "Plain Twin Saber of Resolve",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 17,
+      "hp": 8,
+      "spd": 9,
+      "def": 3
+    },
+    {
+      "id": "weapon-032",
+      "name": "Plain Dawn Glaive of Ember",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 21,
+      "hp": 0,
+      "spd": 3,
+      "def": 6
+    },
+    {
+      "id": "weapon-033",
+      "name": "Refined Dusk Mace of Ruin",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 25,
+      "hp": 13,
+      "spd": 3,
+      "def": 6
+    },
+    {
+      "id": "weapon-034",
+      "name": "Plain Void Pike of Trial",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 5,
+      "spd": 9,
+      "def": 8
+    },
+    {
+      "id": "weapon-035",
+      "name": "Refined Rift Hammer of Valor",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 21,
+      "hp": 14,
+      "spd": 8,
+      "def": 0
+    },
+    {
+      "id": "weapon-036",
+      "name": "Plain Phantom Saber of Fury",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 19,
+      "hp": 19,
+      "spd": 4,
+      "def": 4
+    },
+    {
+      "id": "weapon-037",
+      "name": "Refined Ash Glaive of Breakers",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 26,
+      "hp": 16,
+      "spd": 2,
+      "def": 1
+    },
+    {
+      "id": "weapon-038",
+      "name": "Plain Granite Mace of Nightfall",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 25,
+      "hp": 6,
+      "spd": 6,
+      "def": 2
+    },
+    {
+      "id": "weapon-039",
+      "name": "Refined Tempest Pike of Sparks",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 28,
+      "hp": 4,
+      "spd": 5,
+      "def": 4
+    },
+    {
+      "id": "weapon-040",
+      "name": "Plain Cinder Hammer of Echo",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 17,
+      "spd": 2,
+      "def": 1
+    },
+    {
+      "id": "weapon-041",
+      "name": "Plain Iron Saber of Tempest",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 25,
+      "hp": 18,
+      "spd": 10,
+      "def": 6
+    },
+    {
+      "id": "weapon-042",
+      "name": "Refined Ash Glaive of Echo",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 25,
+      "hp": 3,
+      "spd": 8,
+      "def": 2
+    },
+    {
+      "id": "weapon-043",
+      "name": "Plain Storm Mace of Oath",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 22,
+      "hp": 15,
+      "spd": 10,
+      "def": 6
+    },
+    {
+      "id": "weapon-044",
+      "name": "Plain Night Pike of Gale",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 21,
+      "hp": 7,
+      "spd": 2,
+      "def": 5
+    },
+    {
+      "id": "weapon-045",
+      "name": "Plain Crimson Hammer of Tides",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 22,
+      "hp": 1,
+      "spd": 10,
+      "def": 3
+    },
+    {
+      "id": "weapon-046",
+      "name": "Refined Dawn Saber of Resolve",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 22,
+      "hp": 16,
+      "spd": 5,
+      "def": 8
+    },
+    {
+      "id": "weapon-047",
+      "name": "Plain Solar Glaive of Ember",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 10,
+      "spd": 4,
+      "def": 2
+    },
+    {
+      "id": "weapon-048",
+      "name": "Plain Lunar Mace of Ruin",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 17,
+      "hp": 0,
+      "spd": 2,
+      "def": 1
+    },
+    {
+      "id": "weapon-049",
+      "name": "Mythic Wild Pike of Trial",
+      "type": "Weapon",
+      "rarity": "Epic",
+      "atk": 26,
+      "hp": 2,
+      "spd": 9,
+      "def": 2
+    },
+    {
+      "id": "weapon-050",
+      "name": "Mythic Runic Hammer of Valor",
+      "type": "Weapon",
+      "rarity": "Epic",
+      "atk": 30,
+      "hp": 20,
+      "spd": 7,
+      "def": 9
+    },
+    {
+      "id": "weapon-051",
+      "name": "Plain Twin Saber of Fury",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 18,
+      "hp": 18,
+      "spd": 5,
+      "def": 2
+    },
+    {
+      "id": "weapon-052",
+      "name": "Plain Dawn Glaive of Breakers",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 20,
+      "hp": 6,
+      "spd": 2,
+      "def": 4
+    },
+    {
+      "id": "weapon-053",
+      "name": "Refined Dusk Mace of Valor",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 23,
+      "hp": 19,
+      "spd": 3,
+      "def": 2
+    },
+    {
+      "id": "weapon-054",
+      "name": "Mythic Void Pike of Sparks",
+      "type": "Weapon",
+      "rarity": "Epic",
+      "atk": 37,
+      "hp": 13,
+      "spd": 10,
+      "def": 4
+    },
+    {
+      "id": "weapon-055",
+      "name": "Plain Crimson Hammer of Dawn",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 20,
+      "hp": 8,
+      "spd": 10,
+      "def": 0
+    },
+    {
+      "id": "weapon-056",
+      "name": "Plain Phantom Saber of Tempest",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 21,
+      "hp": 7,
+      "spd": 8,
+      "def": 1
+    },
+    {
+      "id": "weapon-057",
+      "name": "Mythic Ember Glaive of Echo",
+      "type": "Weapon",
+      "rarity": "Epic",
+      "atk": 26,
+      "hp": 0,
+      "spd": 7,
+      "def": 5
+    },
+    {
+      "id": "weapon-058",
+      "name": "Plain Granite Mace of Oath",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 18,
+      "hp": 11,
+      "spd": 5,
+      "def": 5
+    },
+    {
+      "id": "weapon-059",
+      "name": "Plain Tempest Pike of Gale",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 17,
+      "hp": 9,
+      "spd": 6,
+      "def": 1
+    },
+    {
+      "id": "weapon-060",
+      "name": "Plain Cinder Hammer of Tides",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 21,
+      "hp": 17,
+      "spd": 2,
+      "def": 6
+    },
+    {
+      "id": "weapon-061",
+      "name": "Plain Iron Saber of Resolve",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 14,
+      "spd": 2,
+      "def": 7
+    },
+    {
+      "id": "weapon-062",
+      "name": "Plain Ash Glaive of Ember",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 17,
+      "hp": 17,
+      "spd": 10,
+      "def": 6
+    },
+    {
+      "id": "weapon-063",
+      "name": "Refined Storm Mace of Ruin",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 24,
+      "hp": 22,
+      "spd": 9,
+      "def": 3
+    },
+    {
+      "id": "weapon-064",
+      "name": "Plain Crimson Pike of Trial",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 26,
+      "hp": 20,
+      "spd": 10,
+      "def": 4
+    },
+    {
+      "id": "weapon-065",
+      "name": "Plain Crimson Hammer of Valor",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 24,
+      "hp": 10,
+      "spd": 6,
+      "def": 1
+    },
+    {
+      "id": "weapon-066",
+      "name": "Plain Frost Saber of Oath",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 25,
+      "hp": 6,
+      "spd": 5,
+      "def": 7
+    },
+    {
+      "id": "weapon-067",
+      "name": "Plain Solar Glaive of Breakers",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 26,
+      "hp": 10,
+      "spd": 8,
+      "def": 0
+    },
+    {
+      "id": "weapon-068",
+      "name": "Plain Lunar Mace of Nightfall",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 17,
+      "hp": 18,
+      "spd": 3,
+      "def": 8
+    },
+    {
+      "id": "weapon-069",
+      "name": "Plain Wild Pike of Sparks",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 18,
+      "hp": 3,
+      "spd": 8,
+      "def": 4
+    },
+    {
+      "id": "weapon-070",
+      "name": "Plain Runic Hammer of Dawn",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 24,
+      "hp": 11,
+      "spd": 5,
+      "def": 3
+    },
+    {
+      "id": "weapon-071",
+      "name": "Plain Twin Saber of Tempest",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 21,
+      "hp": 6,
+      "spd": 8,
+      "def": 8
+    },
+    {
+      "id": "weapon-072",
+      "name": "Refined Dawn Glaive of Echo",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 30,
+      "hp": 16,
+      "spd": 11,
+      "def": 5
+    },
+    {
+      "id": "weapon-073",
+      "name": "Plain Void Mace of Oath",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 19,
+      "hp": 17,
+      "spd": 8,
+      "def": 0
+    },
+    {
+      "id": "weapon-074",
+      "name": "Plain Void Pike of Gale",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 26,
+      "hp": 13,
+      "spd": 10,
+      "def": 6
+    },
+    {
+      "id": "weapon-075",
+      "name": "Refined Rift Hammer of Tides",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 29,
+      "hp": 5,
+      "spd": 9,
+      "def": 9
+    },
+    {
+      "id": "weapon-076",
+      "name": "Plain Phantom Saber of Resolve",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 18,
+      "hp": 6,
+      "spd": 7,
+      "def": 6
+    },
+    {
+      "id": "weapon-077",
+      "name": "Plain Ember Glaive of Ember",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 22,
+      "hp": 5,
+      "spd": 7,
+      "def": 7
+    },
+    {
+      "id": "weapon-078",
+      "name": "Plain Granite Mace of Ruin",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 24,
+      "hp": 10,
+      "spd": 7,
+      "def": 5
+    },
+    {
+      "id": "weapon-079",
+      "name": "Plain Tempest Pike of Ember",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 16,
+      "hp": 0,
+      "spd": 6,
+      "def": 4
+    },
+    {
+      "id": "weapon-080",
+      "name": "Plain Cinder Hammer of Valor",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 17,
+      "hp": 18,
+      "spd": 6,
+      "def": 8
+    },
+    {
+      "id": "weapon-081",
+      "name": "Mythic Iron Saber of Fury",
+      "type": "Weapon",
+      "rarity": "Epic",
+      "atk": 32,
+      "hp": -10,
+      "spd": 10,
+      "def": 6
+    },
+    {
+      "id": "weapon-082",
+      "name": "Plain Night Glaive of Breakers",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 22,
+      "hp": 9,
+      "spd": 2,
+      "def": 0
+    },
+    {
+      "id": "weapon-083",
+      "name": "Plain Storm Mace of Nightfall",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 24,
+      "hp": 6,
+      "spd": 4,
+      "def": 2
+    },
+    {
+      "id": "weapon-084",
+      "name": "Plain Night Pike of Sparks",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 25,
+      "hp": 14,
+      "spd": 4,
+      "def": 5
+    },
+    {
+      "id": "weapon-085",
+      "name": "Plain Crimson Hammer of Dawn",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 17,
+      "hp": 17,
+      "spd": 2,
+      "def": 2
+    },
+    {
+      "id": "weapon-086",
+      "name": "Plain Frost Saber of Tempest",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 20,
+      "hp": 14,
+      "spd": 3,
+      "def": 7
+    },
+    {
+      "id": "weapon-087",
+      "name": "Refined Solar Glaive of Echo",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 23,
+      "hp": 22,
+      "spd": 9,
+      "def": 8
+    },
+    {
+      "id": "weapon-088",
+      "name": "Plain Lunar Mace of Oath",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 25,
+      "hp": 9,
+      "spd": 9,
+      "def": 1
+    },
+    {
+      "id": "weapon-089",
+      "name": "Plain Wild Pike of Gale",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 18,
+      "hp": 18,
+      "spd": 8,
+      "def": 3
+    },
+    {
+      "id": "weapon-090",
+      "name": "Plain Runic Hammer of Tides",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 22,
+      "hp": 17,
+      "spd": 7,
+      "def": 3
+    },
+    {
+      "id": "weapon-091",
+      "name": "Refined Ember Saber of Resolve",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 26,
+      "hp": 3,
+      "spd": 9,
+      "def": 0
+    },
+    {
+      "id": "weapon-092",
+      "name": "Mythic Dawn Glaive of Trial",
+      "type": "Weapon",
+      "rarity": "Epic",
+      "atk": 30,
+      "hp": 3,
+      "spd": 5,
+      "def": 0
+    },
+    {
+      "id": "weapon-093",
+      "name": "Refined Dusk Mace of Ruin",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 22,
+      "hp": 19,
+      "spd": 8,
+      "def": 6
+    },
+    {
+      "id": "weapon-094",
+      "name": "Plain Void Pike of Trial",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 17,
+      "hp": 4,
+      "spd": 4,
+      "def": 6
+    },
+    {
+      "id": "weapon-095",
+      "name": "Refined Rift Hammer of Valor",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 26,
+      "hp": 5,
+      "spd": 9,
+      "def": 1
+    },
+    {
+      "id": "weapon-096",
+      "name": "Refined Phantom Saber of Fury",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 26,
+      "hp": 21,
+      "spd": 11,
+      "def": 5
+    },
+    {
+      "id": "weapon-097",
+      "name": "Refined Ember Glaive of Breakers",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 19,
+      "hp": 6,
+      "spd": 8,
+      "def": 9
+    },
+    {
+      "id": "weapon-098",
+      "name": "Refined Granite Mace of Nightfall",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 24,
+      "hp": 1,
+      "spd": 7,
+      "def": 0
+    },
+    {
+      "id": "weapon-099",
+      "name": "Plain Tempest Pike of Sparks",
+      "type": "Weapon",
+      "rarity": "Common",
+      "atk": 23,
+      "hp": 4,
+      "spd": 2,
+      "def": 4
+    },
+    {
+      "id": "weapon-100",
+      "name": "Refined Twin Hammer of Dawn",
+      "type": "Weapon",
+      "rarity": "Rare",
+      "atk": 20,
+      "hp": 15,
+      "spd": 8,
+      "def": 2
+    },
+    {
+      "id": "armor-001",
+      "name": "Refined Stone Mail of Oath",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 4,
+      "hp": 38,
+      "spd": -2,
+      "def": 27
+    },
+    {
+      "id": "armor-002",
+      "name": "Plain Stone Vest of Flame",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 32,
+      "spd": -2,
+      "def": 24
+    },
+    {
+      "id": "armor-003",
+      "name": "Refined Ward Guard of Balance",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 5,
+      "hp": 48,
+      "spd": 5,
+      "def": 23
+    },
+    {
+      "id": "armor-004",
+      "name": "Plain Bastion Barrier of Frost",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 23,
+      "spd": -4,
+      "def": 26
+    },
+    {
+      "id": "armor-005",
+      "name": "Plain Aegis Raiment of Shelter",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 0,
+      "hp": 41,
+      "spd": 0,
+      "def": 23
+    },
+    {
+      "id": "armor-006",
+      "name": "Plain Guardian Mail of Oath",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 24,
+      "spd": 1,
+      "def": 22
+    },
+    {
+      "id": "armor-007",
+      "name": "Plain Frost Vest of Champions",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 36,
+      "spd": 2,
+      "def": 18
+    },
+    {
+      "id": "armor-008",
+      "name": "Plain Flame Guard of Defiance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 44,
+      "spd": 4,
+      "def": 20
+    },
+    {
+      "id": "armor-009",
+      "name": "Refined Dawn Barrier of Sages",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 2,
+      "hp": 26,
+      "spd": -3,
+      "def": 27
+    },
+    {
+      "id": "armor-010",
+      "name": "Mythic Stone Raiment of Mercy",
+      "type": "Armor",
+      "rarity": "Epic",
+      "atk": 5,
+      "hp": 66,
+      "spd": -1,
+      "def": 35
+    },
+    {
+      "id": "armor-011",
+      "name": "Plain Echo Mail of Sand",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 25,
+      "spd": 1,
+      "def": 24
+    },
+    {
+      "id": "armor-012",
+      "name": "Plain Rune Vest of Echo",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 37,
+      "spd": -2,
+      "def": 16
+    },
+    {
+      "id": "armor-013",
+      "name": "Plain Storm Guard of Renewal",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 20,
+      "spd": -4,
+      "def": 17
+    },
+    {
+      "id": "armor-014",
+      "name": "Plain Moon Barrier of Sages",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 20,
+      "spd": 1,
+      "def": 18
+    },
+    {
+      "id": "armor-015",
+      "name": "Refined Sun Raiment of Stone",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 7,
+      "hp": 45,
+      "spd": 3,
+      "def": 27
+    },
+    {
+      "id": "armor-016",
+      "name": "Refined Titan Mail of Bulwark",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 0,
+      "hp": 43,
+      "spd": -1,
+      "def": 22
+    },
+    {
+      "id": "armor-017",
+      "name": "Plain Oak Vest of Flame",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 41,
+      "spd": -3,
+      "def": 22
+    },
+    {
+      "id": "armor-018",
+      "name": "Refined Granite Guard of Balance",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 1,
+      "hp": 43,
+      "spd": -3,
+      "def": 29
+    },
+    {
+      "id": "armor-019",
+      "name": "Refined Frost Barrier of Frost",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 8,
+      "hp": 36,
+      "spd": -5,
+      "def": 20
+    },
+    {
+      "id": "armor-020",
+      "name": "Plain Sky Raiment of Shelter",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 39,
+      "spd": 3,
+      "def": 17
+    },
+    {
+      "id": "armor-021",
+      "name": "Plain Iron Mail of Oath",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 33,
+      "spd": 2,
+      "def": 18
+    },
+    {
+      "id": "armor-022",
+      "name": "Plain Stone Vest of Champions",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 20,
+      "spd": -1,
+      "def": 19
+    },
+    {
+      "id": "armor-023",
+      "name": "Plain Ward Guard of Defiance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 31,
+      "spd": -3,
+      "def": 23
+    },
+    {
+      "id": "armor-024",
+      "name": "Plain Bastion Barrier of Sages",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 32,
+      "spd": 1,
+      "def": 17
+    },
+    {
+      "id": "armor-025",
+      "name": "Plain Aegis Raiment of Mercy",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 26,
+      "spd": -1,
+      "def": 25
+    },
+    {
+      "id": "armor-026",
+      "name": "Plain Guardian Mail of Sand",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 35,
+      "spd": 1,
+      "def": 25
+    },
+    {
+      "id": "armor-027",
+      "name": "Ascendant Frost Vest of Renewal",
+      "type": "Armor",
+      "rarity": "Legendary",
+      "atk": 6,
+      "hp": 59,
+      "spd": 9,
+      "def": 42
+    },
+    {
+      "id": "armor-028",
+      "name": "Plain Dawn Guard of Renewal",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 44,
+      "spd": 4,
+      "def": 17
+    },
+    {
+      "id": "armor-029",
+      "name": "Plain Dawn Barrier of Endurance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 28,
+      "spd": 3,
+      "def": 18
+    },
+    {
+      "id": "armor-030",
+      "name": "Plain Dusk Raiment of Stone",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 43,
+      "spd": -3,
+      "def": 21
+    },
+    {
+      "id": "armor-031",
+      "name": "Plain Echo Mail of Bulwark",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 24,
+      "spd": -2,
+      "def": 19
+    },
+    {
+      "id": "armor-032",
+      "name": "Plain Rune Vest of Flame",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 21,
+      "spd": -3,
+      "def": 19
+    },
+    {
+      "id": "armor-033",
+      "name": "Refined Storm Guard of Balance",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 4,
+      "hp": 23,
+      "spd": 3,
+      "def": 20
+    },
+    {
+      "id": "armor-034",
+      "name": "Plain Moon Barrier of Frost",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 33,
+      "spd": 3,
+      "def": 22
+    },
+    {
+      "id": "armor-035",
+      "name": "Plain Sun Raiment of Shelter",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 44,
+      "spd": -2,
+      "def": 18
+    },
+    {
+      "id": "armor-036",
+      "name": "Plain Titan Mail of Oath",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 25,
+      "spd": -4,
+      "def": 26
+    },
+    {
+      "id": "armor-037",
+      "name": "Plain Sun Vest of Champions",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 38,
+      "spd": -4,
+      "def": 26
+    },
+    {
+      "id": "armor-038",
+      "name": "Plain Granite Guard of Defiance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 39,
+      "spd": -3,
+      "def": 17
+    },
+    {
+      "id": "armor-039",
+      "name": "Mythic Hollow Barrier of Sages",
+      "type": "Armor",
+      "rarity": "Epic",
+      "atk": 10,
+      "hp": 60,
+      "spd": -3,
+      "def": 23
+    },
+    {
+      "id": "armor-040",
+      "name": "Plain Sky Raiment of Sages",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 29,
+      "spd": 0,
+      "def": 19
+    },
+    {
+      "id": "armor-041",
+      "name": "Plain Iron Mail of Sand",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 37,
+      "spd": 0,
+      "def": 25
+    },
+    {
+      "id": "armor-042",
+      "name": "Plain Stone Vest of Echo",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 34,
+      "spd": 1,
+      "def": 22
+    },
+    {
+      "id": "armor-043",
+      "name": "Plain Ward Guard of Renewal",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 28,
+      "spd": 4,
+      "def": 19
+    },
+    {
+      "id": "armor-044",
+      "name": "Plain Bastion Barrier of Endurance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 32,
+      "spd": 0,
+      "def": 22
+    },
+    {
+      "id": "armor-045",
+      "name": "Plain Aegis Raiment of Stone",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 40,
+      "spd": -4,
+      "def": 26
+    },
+    {
+      "id": "armor-046",
+      "name": "Plain Echo Mail of Bulwark",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 32,
+      "spd": -4,
+      "def": 21
+    },
+    {
+      "id": "armor-047",
+      "name": "Plain Frost Vest of Flame",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 33,
+      "spd": 2,
+      "def": 25
+    },
+    {
+      "id": "armor-048",
+      "name": "Refined Flame Guard of Balance",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 7,
+      "hp": 51,
+      "spd": 4,
+      "def": 20
+    },
+    {
+      "id": "armor-049",
+      "name": "Refined Dawn Barrier of Frost",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 2,
+      "hp": 34,
+      "spd": 5,
+      "def": 21
+    },
+    {
+      "id": "armor-050",
+      "name": "Refined Dusk Raiment of Shelter",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 4,
+      "hp": 33,
+      "spd": -1,
+      "def": 30
+    },
+    {
+      "id": "armor-051",
+      "name": "Plain Echo Mail of Oath",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 42,
+      "spd": 4,
+      "def": 20
+    },
+    {
+      "id": "armor-052",
+      "name": "Plain Rune Vest of Champions",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 44,
+      "spd": -4,
+      "def": 23
+    },
+    {
+      "id": "armor-053",
+      "name": "Plain Storm Guard of Champions",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 0,
+      "hp": 34,
+      "spd": 1,
+      "def": 22
+    },
+    {
+      "id": "armor-054",
+      "name": "Plain Moon Barrier of Sages",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 33,
+      "spd": 4,
+      "def": 25
+    },
+    {
+      "id": "armor-055",
+      "name": "Plain Hollow Raiment of Mercy",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 26,
+      "spd": -2,
+      "def": 23
+    },
+    {
+      "id": "armor-056",
+      "name": "Plain Titan Mail of Sand",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 43,
+      "spd": 0,
+      "def": 19
+    },
+    {
+      "id": "armor-057",
+      "name": "Plain Oak Vest of Echo",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 37,
+      "spd": 1,
+      "def": 16
+    },
+    {
+      "id": "armor-058",
+      "name": "Plain Granite Guard of Renewal",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 32,
+      "spd": -3,
+      "def": 24
+    },
+    {
+      "id": "armor-059",
+      "name": "Plain Hollow Barrier of Endurance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 35,
+      "spd": -3,
+      "def": 24
+    },
+    {
+      "id": "armor-060",
+      "name": "Plain Sky Raiment of Stone",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 26,
+      "spd": 3,
+      "def": 17
+    },
+    {
+      "id": "armor-061",
+      "name": "Plain Iron Mail of Bulwark",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 27,
+      "spd": -4,
+      "def": 17
+    },
+    {
+      "id": "armor-062",
+      "name": "Plain Stone Vest of Flame",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 21,
+      "spd": 0,
+      "def": 23
+    },
+    {
+      "id": "armor-063",
+      "name": "Plain Ward Guard of Balance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 42,
+      "spd": 2,
+      "def": 19
+    },
+    {
+      "id": "armor-064",
+      "name": "Refined Aegis Barrier of Frost",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 8,
+      "hp": 35,
+      "spd": 3,
+      "def": 27
+    },
+    {
+      "id": "armor-065",
+      "name": "Plain Aegis Raiment of Shelter",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 30,
+      "spd": 0,
+      "def": 18
+    },
+    {
+      "id": "armor-066",
+      "name": "Mythic Guardian Mail of Sand",
+      "type": "Armor",
+      "rarity": "Epic",
+      "atk": 7,
+      "hp": 30,
+      "spd": -5,
+      "def": 29
+    },
+    {
+      "id": "armor-067",
+      "name": "Refined Frost Vest of Champions",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 6,
+      "hp": 41,
+      "spd": -2,
+      "def": 29
+    },
+    {
+      "id": "armor-068",
+      "name": "Mythic Flame Guard of Defiance",
+      "type": "Armor",
+      "rarity": "Epic",
+      "atk": 8,
+      "hp": 61,
+      "spd": -2,
+      "def": 33
+    },
+    {
+      "id": "armor-069",
+      "name": "Refined Dawn Barrier of Sages",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 1,
+      "hp": 47,
+      "spd": 1,
+      "def": 24
+    },
+    {
+      "id": "armor-070",
+      "name": "Plain Dusk Raiment of Mercy",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 42,
+      "spd": -1,
+      "def": 26
+    },
+    {
+      "id": "armor-071",
+      "name": "Plain Echo Mail of Sand",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 29,
+      "spd": 2,
+      "def": 24
+    },
+    {
+      "id": "armor-072",
+      "name": "Plain Rune Vest of Echo",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 36,
+      "spd": 1,
+      "def": 16
+    },
+    {
+      "id": "armor-073",
+      "name": "Mythic Stone Guard of Renewal",
+      "type": "Armor",
+      "rarity": "Epic",
+      "atk": 3,
+      "hp": 45,
+      "spd": -1,
+      "def": 26
+    },
+    {
+      "id": "armor-074",
+      "name": "Refined Moon Barrier of Endurance",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 7,
+      "hp": 40,
+      "spd": 0,
+      "def": 21
+    },
+    {
+      "id": "armor-075",
+      "name": "Refined Sun Raiment of Stone",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 1,
+      "hp": 47,
+      "spd": -1,
+      "def": 28
+    },
+    {
+      "id": "armor-076",
+      "name": "Plain Titan Mail of Bulwark",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 0,
+      "hp": 38,
+      "spd": 0,
+      "def": 16
+    },
+    {
+      "id": "armor-077",
+      "name": "Plain Oak Vest of Flame",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 43,
+      "spd": 4,
+      "def": 26
+    },
+    {
+      "id": "armor-078",
+      "name": "Plain Granite Guard of Balance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 28,
+      "spd": -1,
+      "def": 19
+    },
+    {
+      "id": "armor-079",
+      "name": "Refined Hollow Barrier of Oath",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 4,
+      "hp": 39,
+      "spd": 0,
+      "def": 24
+    },
+    {
+      "id": "armor-080",
+      "name": "Refined Sky Raiment of Shelter",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 5,
+      "hp": 33,
+      "spd": 4,
+      "def": 23
+    },
+    {
+      "id": "armor-081",
+      "name": "Plain Iron Mail of Oath",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 3,
+      "hp": 42,
+      "spd": -1,
+      "def": 16
+    },
+    {
+      "id": "armor-082",
+      "name": "Plain Sky Vest of Champions",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 40,
+      "spd": -2,
+      "def": 24
+    },
+    {
+      "id": "armor-083",
+      "name": "Plain Ward Guard of Defiance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 29,
+      "spd": 3,
+      "def": 16
+    },
+    {
+      "id": "armor-084",
+      "name": "Refined Bastion Barrier of Sages",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 6,
+      "hp": 44,
+      "spd": -3,
+      "def": 21
+    },
+    {
+      "id": "armor-085",
+      "name": "Plain Aegis Raiment of Mercy",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 31,
+      "spd": 4,
+      "def": 16
+    },
+    {
+      "id": "armor-086",
+      "name": "Plain Guardian Mail of Sand",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 22,
+      "spd": -2,
+      "def": 20
+    },
+    {
+      "id": "armor-087",
+      "name": "Plain Frost Vest of Echo",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 1,
+      "hp": 28,
+      "spd": -1,
+      "def": 23
+    },
+    {
+      "id": "armor-088",
+      "name": "Plain Flame Guard of Renewal",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 0,
+      "hp": 35,
+      "spd": 0,
+      "def": 21
+    },
+    {
+      "id": "armor-089",
+      "name": "Refined Dawn Barrier of Endurance",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 1,
+      "hp": 46,
+      "spd": -2,
+      "def": 26
+    },
+    {
+      "id": "armor-090",
+      "name": "Refined Dusk Raiment of Stone",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 2,
+      "hp": 51,
+      "spd": 0,
+      "def": 24
+    },
+    {
+      "id": "armor-091",
+      "name": "Plain Sun Mail of Bulwark",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 40,
+      "spd": -3,
+      "def": 19
+    },
+    {
+      "id": "armor-092",
+      "name": "Plain Rune Vest of Mercy",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 0,
+      "hp": 21,
+      "spd": 3,
+      "def": 23
+    },
+    {
+      "id": "armor-093",
+      "name": "Plain Storm Guard of Balance",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 38,
+      "spd": 4,
+      "def": 17
+    },
+    {
+      "id": "armor-094",
+      "name": "Plain Moon Barrier of Frost",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 29,
+      "spd": 3,
+      "def": 24
+    },
+    {
+      "id": "armor-095",
+      "name": "Plain Sun Raiment of Shelter",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 32,
+      "spd": 2,
+      "def": 17
+    },
+    {
+      "id": "armor-096",
+      "name": "Mythic Titan Mail of Oath",
+      "type": "Armor",
+      "rarity": "Epic",
+      "atk": 9,
+      "hp": 49,
+      "spd": -4,
+      "def": 21
+    },
+    {
+      "id": "armor-097",
+      "name": "Mythic Oak Vest of Champions",
+      "type": "Armor",
+      "rarity": "Epic",
+      "atk": 0,
+      "hp": 30,
+      "spd": 0,
+      "def": 25
+    },
+    {
+      "id": "armor-098",
+      "name": "Refined Granite Guard of Defiance",
+      "type": "Armor",
+      "rarity": "Rare",
+      "atk": 2,
+      "hp": 31,
+      "spd": -3,
+      "def": 20
+    },
+    {
+      "id": "armor-099",
+      "name": "Plain Hollow Barrier of Sages",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 0,
+      "hp": 27,
+      "spd": -2,
+      "def": 26
+    },
+    {
+      "id": "armor-100",
+      "name": "Plain Hollow Raiment of Mercy",
+      "type": "Armor",
+      "rarity": "Common",
+      "atk": 2,
+      "hp": 44,
+      "spd": -2,
+      "def": 18
+    },
+    {
+      "id": "accessory-001",
+      "name": "Refined Fable Charm of Eclipse",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 15,
+      "hp": 27,
+      "spd": 5,
+      "def": 13
+    },
+    {
+      "id": "accessory-002",
+      "name": "Refined Mystic Talisman of Sparks",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 15,
+      "hp": 25,
+      "spd": 14,
+      "def": 5
+    },
+    {
+      "id": "accessory-003",
+      "name": "Plain Warden Sigil of Precision",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 12,
+      "hp": 14,
+      "spd": 10,
+      "def": 5
+    },
+    {
+      "id": "accessory-004",
+      "name": "Plain Arc Token of Stride",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 17,
+      "spd": 8,
+      "def": 11
+    },
+    {
+      "id": "accessory-005",
+      "name": "Plain Pulse Relic of Tempo",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 12,
+      "hp": 26,
+      "spd": 12,
+      "def": 10
+    },
+    {
+      "id": "accessory-006",
+      "name": "Plain Silent Charm of Growth",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 8,
+      "hp": 24,
+      "spd": 14,
+      "def": 11
+    },
+    {
+      "id": "accessory-007",
+      "name": "Plain Lumen Talisman of Control",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 9,
+      "spd": 11,
+      "def": 13
+    },
+    {
+      "id": "accessory-008",
+      "name": "Ascendant Nova Sigil of Twilight",
+      "type": "Accessory",
+      "rarity": "Legendary",
+      "atk": 15,
+      "hp": 29,
+      "spd": 23,
+      "def": 7
+    },
+    {
+      "id": "accessory-009",
+      "name": "Plain Gloom Token of Will",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 9,
+      "hp": 15,
+      "spd": 12,
+      "def": 7
+    },
+    {
+      "id": "accessory-010",
+      "name": "Refined Aether Relic of Insight",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 7,
+      "hp": 16,
+      "spd": 14,
+      "def": 11
+    },
+    {
+      "id": "accessory-011",
+      "name": "Plain Oracle Charm of Resonance",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 13,
+      "hp": 21,
+      "spd": 12,
+      "def": 7
+    },
+    {
+      "id": "accessory-012",
+      "name": "Plain Vivid Talisman of Winds",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 12,
+      "hp": 19,
+      "spd": 10,
+      "def": 12
+    },
+    {
+      "id": "accessory-013",
+      "name": "Plain Duskwind Sigil of Clarity",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 11,
+      "hp": 19,
+      "spd": 12,
+      "def": 11
+    },
+    {
+      "id": "accessory-014",
+      "name": "Plain Sunstep Token of Stride",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 10,
+      "spd": 10,
+      "def": 5
+    },
+    {
+      "id": "accessory-015",
+      "name": "Plain Moonstep Relic of Eclipse",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 8,
+      "hp": 20,
+      "spd": 4,
+      "def": 9
+    },
+    {
+      "id": "accessory-016",
+      "name": "Mythic Aether Charm of Fortune",
+      "type": "Accessory",
+      "rarity": "Epic",
+      "atk": 16,
+      "hp": 25,
+      "spd": 9,
+      "def": 15
+    },
+    {
+      "id": "accessory-017",
+      "name": "Plain Fable Talisman of Sparks",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 18,
+      "spd": 9,
+      "def": 11
+    },
+    {
+      "id": "accessory-018",
+      "name": "Plain Crescent Sigil of Precision",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 24,
+      "spd": 10,
+      "def": 11
+    },
+    {
+      "id": "accessory-019",
+      "name": "Plain Crescent Token of Stride",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 14,
+      "hp": 20,
+      "spd": 4,
+      "def": 8
+    },
+    {
+      "id": "accessory-020",
+      "name": "Plain Whisper Relic of Tempo",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 20,
+      "spd": 12,
+      "def": 14
+    },
+    {
+      "id": "accessory-021",
+      "name": "Plain Swift Charm of Growth",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 13,
+      "spd": 5,
+      "def": 11
+    },
+    {
+      "id": "accessory-022",
+      "name": "Refined Mystic Talisman of Control",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 6,
+      "hp": 20,
+      "spd": 13,
+      "def": 14
+    },
+    {
+      "id": "accessory-023",
+      "name": "Plain Warden Sigil of Twilight",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 25,
+      "spd": 5,
+      "def": 6
+    },
+    {
+      "id": "accessory-024",
+      "name": "Plain Arc Token of Will",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 11,
+      "hp": 10,
+      "spd": 10,
+      "def": 13
+    },
+    {
+      "id": "accessory-025",
+      "name": "Refined Pulse Relic of Insight",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 14,
+      "hp": 15,
+      "spd": 8,
+      "def": 16
+    },
+    {
+      "id": "accessory-026",
+      "name": "Mythic Silent Charm of Resonance",
+      "type": "Accessory",
+      "rarity": "Epic",
+      "atk": 12,
+      "hp": 14,
+      "spd": 8,
+      "def": 10
+    },
+    {
+      "id": "accessory-027",
+      "name": "Plain Lumen Talisman of Will",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 23,
+      "spd": 13,
+      "def": 11
+    },
+    {
+      "id": "accessory-028",
+      "name": "Refined Fable Sigil of Clarity",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 6,
+      "hp": 26,
+      "spd": 10,
+      "def": 14
+    },
+    {
+      "id": "accessory-029",
+      "name": "Mythic Gloom Token of Focus",
+      "type": "Accessory",
+      "rarity": "Epic",
+      "atk": 12,
+      "hp": 11,
+      "spd": 19,
+      "def": 10
+    },
+    {
+      "id": "accessory-030",
+      "name": "Plain Rune Relic of Eclipse",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 12,
+      "hp": 18,
+      "spd": 13,
+      "def": 14
+    },
+    {
+      "id": "accessory-031",
+      "name": "Plain Oracle Charm of Fortune",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 15,
+      "spd": 12,
+      "def": 10
+    },
+    {
+      "id": "accessory-032",
+      "name": "Plain Vivid Talisman of Sparks",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 26,
+      "spd": 6,
+      "def": 5
+    },
+    {
+      "id": "accessory-033",
+      "name": "Plain Duskwind Sigil of Precision",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 17,
+      "spd": 10,
+      "def": 9
+    },
+    {
+      "id": "accessory-034",
+      "name": "Plain Sunstep Token of Stride",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 14,
+      "hp": 25,
+      "spd": 5,
+      "def": 7
+    },
+    {
+      "id": "accessory-035",
+      "name": "Refined Moonstep Relic of Tempo",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 16,
+      "hp": 19,
+      "spd": 15,
+      "def": 12
+    },
+    {
+      "id": "accessory-036",
+      "name": "Refined Aether Charm of Growth",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 16,
+      "hp": 13,
+      "spd": 5,
+      "def": 6
+    },
+    {
+      "id": "accessory-037",
+      "name": "Refined Mystic Talisman of Control",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 8,
+      "hp": 14,
+      "spd": 6,
+      "def": 13
+    },
+    {
+      "id": "accessory-038",
+      "name": "Plain Crescent Sigil of Twilight",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 8,
+      "hp": 23,
+      "spd": 12,
+      "def": 13
+    },
+    {
+      "id": "accessory-039",
+      "name": "Mythic Harmonic Token of Will",
+      "type": "Accessory",
+      "rarity": "Epic",
+      "atk": 15,
+      "hp": 44,
+      "spd": 4,
+      "def": 18
+    },
+    {
+      "id": "accessory-040",
+      "name": "Plain Whisper Relic of Growth",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 15,
+      "spd": 5,
+      "def": 12
+    },
+    {
+      "id": "accessory-041",
+      "name": "Plain Swift Charm of Resonance",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 13,
+      "hp": 16,
+      "spd": 8,
+      "def": 5
+    },
+    {
+      "id": "accessory-042",
+      "name": "Refined Mystic Talisman of Winds",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 16,
+      "hp": 25,
+      "spd": 8,
+      "def": 9
+    },
+    {
+      "id": "accessory-043",
+      "name": "Plain Warden Sigil of Clarity",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 11,
+      "hp": 8,
+      "spd": 14,
+      "def": 10
+    },
+    {
+      "id": "accessory-044",
+      "name": "Plain Arc Token of Focus",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 11,
+      "hp": 12,
+      "spd": 4,
+      "def": 4
+    },
+    {
+      "id": "accessory-045",
+      "name": "Plain Pulse Relic of Eclipse",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 8,
+      "hp": 23,
+      "spd": 11,
+      "def": 4
+    },
+    {
+      "id": "accessory-046",
+      "name": "Mythic Duskwind Charm of Fortune",
+      "type": "Accessory",
+      "rarity": "Epic",
+      "atk": 13,
+      "hp": 23,
+      "spd": 17,
+      "def": 19
+    },
+    {
+      "id": "accessory-047",
+      "name": "Plain Lumen Talisman of Sparks",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 9,
+      "hp": 7,
+      "spd": 8,
+      "def": 13
+    },
+    {
+      "id": "accessory-048",
+      "name": "Plain Nova Sigil of Precision",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 10,
+      "hp": 11,
+      "spd": 7,
+      "def": 8
+    },
+    {
+      "id": "accessory-049",
+      "name": "Plain Gloom Token of Stride",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 12,
+      "hp": 16,
+      "spd": 6,
+      "def": 6
+    },
+    {
+      "id": "accessory-050",
+      "name": "Plain Rune Relic of Tempo",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 22,
+      "spd": 6,
+      "def": 6
+    },
+    {
+      "id": "accessory-051",
+      "name": "Plain Oracle Charm of Growth",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 17,
+      "spd": 8,
+      "def": 8
+    },
+    {
+      "id": "accessory-052",
+      "name": "Plain Vivid Talisman of Control",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 19,
+      "spd": 5,
+      "def": 6
+    },
+    {
+      "id": "accessory-053",
+      "name": "Plain Duskwind Sigil of Stride",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 12,
+      "hp": 16,
+      "spd": 4,
+      "def": 5
+    },
+    {
+      "id": "accessory-054",
+      "name": "Plain Sunstep Token of Will",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 11,
+      "spd": 4,
+      "def": 7
+    },
+    {
+      "id": "accessory-055",
+      "name": "Plain Rune Relic of Insight",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 11,
+      "hp": 19,
+      "spd": 8,
+      "def": 14
+    },
+    {
+      "id": "accessory-056",
+      "name": "Plain Aether Charm of Resonance",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 9,
+      "hp": 6,
+      "spd": 14,
+      "def": 11
+    },
+    {
+      "id": "accessory-057",
+      "name": "Plain Fable Talisman of Winds",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 14,
+      "hp": 26,
+      "spd": 14,
+      "def": 14
+    },
+    {
+      "id": "accessory-058",
+      "name": "Plain Crescent Sigil of Clarity",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 10,
+      "hp": 17,
+      "spd": 12,
+      "def": 4
+    },
+    {
+      "id": "accessory-059",
+      "name": "Mythic Harmonic Token of Focus",
+      "type": "Accessory",
+      "rarity": "Epic",
+      "atk": 10,
+      "hp": 39,
+      "spd": 7,
+      "def": 15
+    },
+    {
+      "id": "accessory-060",
+      "name": "Plain Whisper Relic of Eclipse",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 10,
+      "spd": 12,
+      "def": 6
+    },
+    {
+      "id": "accessory-061",
+      "name": "Plain Swift Charm of Fortune",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 4,
+      "hp": 26,
+      "spd": 9,
+      "def": 9
+    },
+    {
+      "id": "accessory-062",
+      "name": "Plain Mystic Talisman of Sparks",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 6,
+      "spd": 8,
+      "def": 10
+    },
+    {
+      "id": "accessory-063",
+      "name": "Plain Warden Sigil of Precision",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 11,
+      "hp": 21,
+      "spd": 4,
+      "def": 9
+    },
+    {
+      "id": "accessory-064",
+      "name": "Plain Duskwind Token of Stride",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 10,
+      "hp": 21,
+      "spd": 7,
+      "def": 10
+    },
+    {
+      "id": "accessory-065",
+      "name": "Refined Pulse Relic of Tempo",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 6,
+      "hp": 11,
+      "spd": 7,
+      "def": 12
+    },
+    {
+      "id": "accessory-066",
+      "name": "Refined Silent Charm of Focus",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 9,
+      "hp": 26,
+      "spd": 11,
+      "def": 15
+    },
+    {
+      "id": "accessory-067",
+      "name": "Plain Lumen Talisman of Control",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 21,
+      "spd": 10,
+      "def": 12
+    },
+    {
+      "id": "accessory-068",
+      "name": "Refined Nova Sigil of Twilight",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 14,
+      "hp": 15,
+      "spd": 13,
+      "def": 6
+    },
+    {
+      "id": "accessory-069",
+      "name": "Plain Gloom Token of Will",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 20,
+      "spd": 5,
+      "def": 12
+    },
+    {
+      "id": "accessory-070",
+      "name": "Plain Rune Relic of Insight",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 20,
+      "spd": 7,
+      "def": 9
+    },
+    {
+      "id": "accessory-071",
+      "name": "Plain Oracle Charm of Resonance",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 14,
+      "hp": 6,
+      "spd": 12,
+      "def": 12
+    },
+    {
+      "id": "accessory-072",
+      "name": "Plain Vivid Talisman of Winds",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 12,
+      "hp": 11,
+      "spd": 8,
+      "def": 5
+    },
+    {
+      "id": "accessory-073",
+      "name": "Plain Crescent Sigil of Clarity",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 13,
+      "hp": 19,
+      "spd": 7,
+      "def": 9
+    },
+    {
+      "id": "accessory-074",
+      "name": "Refined Sunstep Token of Focus",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 12,
+      "hp": 10,
+      "spd": 13,
+      "def": 7
+    },
+    {
+      "id": "accessory-075",
+      "name": "Refined Moonstep Relic of Eclipse",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 14,
+      "hp": 14,
+      "spd": 10,
+      "def": 12
+    },
+    {
+      "id": "accessory-076",
+      "name": "Plain Aether Charm of Fortune",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 13,
+      "hp": 25,
+      "spd": 12,
+      "def": 10
+    },
+    {
+      "id": "accessory-077",
+      "name": "Refined Fable Talisman of Sparks",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 8,
+      "hp": 17,
+      "spd": 9,
+      "def": 11
+    },
+    {
+      "id": "accessory-078",
+      "name": "Plain Crescent Sigil of Precision",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 12,
+      "hp": 20,
+      "spd": 6,
+      "def": 7
+    },
+    {
+      "id": "accessory-079",
+      "name": "Plain Harmonic Token of Will",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 5,
+      "hp": 26,
+      "spd": 6,
+      "def": 12
+    },
+    {
+      "id": "accessory-080",
+      "name": "Refined Whisper Relic of Tempo",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 11,
+      "hp": 14,
+      "spd": 6,
+      "def": 12
+    },
+    {
+      "id": "accessory-081",
+      "name": "Plain Swift Charm of Growth",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 9,
+      "hp": 13,
+      "spd": 12,
+      "def": 12
+    },
+    {
+      "id": "accessory-082",
+      "name": "Plain Mystic Talisman of Control",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 24,
+      "spd": 14,
+      "def": 5
+    },
+    {
+      "id": "accessory-083",
+      "name": "Plain Warden Sigil of Twilight",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 17,
+      "spd": 9,
+      "def": 9
+    },
+    {
+      "id": "accessory-084",
+      "name": "Refined Arc Token of Will",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 7,
+      "hp": 27,
+      "spd": 6,
+      "def": 5
+    },
+    {
+      "id": "accessory-085",
+      "name": "Refined Pulse Relic of Insight",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 16,
+      "hp": 11,
+      "spd": 7,
+      "def": 16
+    },
+    {
+      "id": "accessory-086",
+      "name": "Plain Silent Charm of Resonance",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 9,
+      "hp": 16,
+      "spd": 12,
+      "def": 5
+    },
+    {
+      "id": "accessory-087",
+      "name": "Plain Lumen Talisman of Winds",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 14,
+      "hp": 19,
+      "spd": 14,
+      "def": 12
+    },
+    {
+      "id": "accessory-088",
+      "name": "Plain Nova Sigil of Clarity",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 13,
+      "hp": 11,
+      "spd": 7,
+      "def": 10
+    },
+    {
+      "id": "accessory-089",
+      "name": "Plain Gloom Token of Focus",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 10,
+      "hp": 23,
+      "spd": 6,
+      "def": 8
+    },
+    {
+      "id": "accessory-090",
+      "name": "Plain Rune Relic of Eclipse",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 7,
+      "hp": 17,
+      "spd": 8,
+      "def": 11
+    },
+    {
+      "id": "accessory-091",
+      "name": "Plain Sunstep Charm of Fortune",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 14,
+      "hp": 21,
+      "spd": 13,
+      "def": 6
+    },
+    {
+      "id": "accessory-092",
+      "name": "Refined Vivid Talisman of Stride",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 10,
+      "hp": 14,
+      "spd": 6,
+      "def": 9
+    },
+    {
+      "id": "accessory-093",
+      "name": "Plain Duskwind Sigil of Precision",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 6,
+      "hp": 26,
+      "spd": 11,
+      "def": 13
+    },
+    {
+      "id": "accessory-094",
+      "name": "Plain Sunstep Token of Stride",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 8,
+      "hp": 17,
+      "spd": 6,
+      "def": 14
+    },
+    {
+      "id": "accessory-095",
+      "name": "Refined Moonstep Relic of Tempo",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 7,
+      "hp": 7,
+      "spd": 16,
+      "def": 7
+    },
+    {
+      "id": "accessory-096",
+      "name": "Plain Aether Charm of Growth",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 14,
+      "hp": 24,
+      "spd": 5,
+      "def": 4
+    },
+    {
+      "id": "accessory-097",
+      "name": "Plain Fable Talisman of Control",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 13,
+      "hp": 25,
+      "spd": 8,
+      "def": 5
+    },
+    {
+      "id": "accessory-098",
+      "name": "Mythic Crescent Sigil of Twilight",
+      "type": "Accessory",
+      "rarity": "Epic",
+      "atk": 9,
+      "hp": 10,
+      "spd": 16,
+      "def": 17
+    },
+    {
+      "id": "accessory-099",
+      "name": "Refined Harmonic Token of Will",
+      "type": "Accessory",
+      "rarity": "Rare",
+      "atk": 8,
+      "hp": 21,
+      "spd": 5,
+      "def": 10
+    },
+    {
+      "id": "accessory-100",
+      "name": "Plain Whisper Relic of Insight",
+      "type": "Accessory",
+      "rarity": "Common",
+      "atk": 14,
+      "hp": 15,
+      "spd": 4,
+      "def": 10
+    }
+  ]
+}
