@@ -1,4 +1,8 @@
-import { SlashCommandBuilder } from "discord.js";
+import {
+  InteractionContextType,
+  MessageFlags,
+  SlashCommandBuilder,
+} from "discord.js";
 import { joinVoice, leaveVoice } from "../services/VoiceService.js";
 import type { Command } from "../types/index.js";
 
@@ -6,6 +10,7 @@ export const voice: Command = {
   data: new SlashCommandBuilder()
     .setName("voice")
     .setDescription("Voice channel commands.")
+    .setContexts(InteractionContextType.Guild)
     .addSubcommand((subcommand) =>
       subcommand
         .setName("join")
@@ -31,6 +36,7 @@ export const voice: Command = {
       default: {
         await interaction.reply({
           content: "Unknown voice subcommand.",
+          flags: MessageFlags.Ephemeral,
         });
       }
     }

@@ -3,6 +3,7 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
+  InteractionContextType,
   MessageFlags,
   SlashCommandBuilder,
   type ChatInputCommandInteraction,
@@ -29,6 +30,7 @@ export const game: Command = {
   data: new SlashCommandBuilder()
     .setName("game")
     .setDescription("Voicebound Arena commands.")
+    .setContexts(InteractionContextType.Guild)
     .addSubcommand((subcommand) =>
       subcommand
         .setName("help")
@@ -674,7 +676,11 @@ async function replyWithGameError(
   }
 
   if (interaction.deferred) {
-    await interaction.editReply({ content: message, embeds: [] });
+    await interaction.editReply({
+      content: message,
+      embeds: [],
+      components: [],
+    });
     return;
   }
 
