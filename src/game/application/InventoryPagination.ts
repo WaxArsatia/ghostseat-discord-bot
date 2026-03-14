@@ -98,6 +98,9 @@ export function buildInventoryPagePayload(
   const components: InventoryPagePayload["components"] = [];
 
   if (pageItems.length > 0) {
+    const defaultItemId = pageItems.find((entry) => entry.equippedSlot !== null)
+      ?.item.id;
+
     const equipSelect = new StringSelectMenuBuilder()
       .setCustomId(buildInventoryEquipCustomId(query.viewerUserId, currentPage))
       .setPlaceholder("Select an item to equip")
@@ -108,7 +111,7 @@ export function buildInventoryPagePayload(
           label: truncate(`[${entry.item.rarity}] ${entry.item.name}`, 100),
           value: entry.item.id,
           description: truncate(`${entry.item.type} • ${entry.item.id}`, 100),
-          default: entry.equippedSlot !== null,
+          default: defaultItemId === entry.item.id,
         })),
       );
 
