@@ -1,16 +1,19 @@
 import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
   EmbedBuilder,
   MessageFlags,
   SlashCommandBuilder,
   type ChatInputCommandInteraction,
 } from "discord.js";
 import { buildDuelLogPagePayload } from "../game/application/DuelLogPagination.js";
-import { type InventoryItemView } from "../game/application/InventoryLoadoutUseCase.js";
+import { buildInventoryPagePayload } from "../game/application/InventoryPagination.js";
 import { isGameUserError } from "../game/application/GameErrors.js";
 import type { ProfileResult } from "../game/application/ProfileUseCase.js";
 import {
   convertGameShards,
-  equipGameItem,
+  equipGameItemById,
   grantGameTickets,
   getGameLeaderboard,
   runGameDuel,
@@ -21,8 +24,6 @@ import {
 } from "../game/index.js";
 import type { Command, EquipSlot } from "../types/index.js";
 import { isAdminUser } from "../config/admin.js";
-
-const INVENTORY_PAGE_SIZE = 10;
 
 export const game: Command = {
   data: new SlashCommandBuilder()
@@ -62,18 +63,7 @@ export const game: Command = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("equip")
-        .setDescription("Equip an owned item to a slot.")
-        .addStringOption((option) =>
-          option
-            .setName("slot")
-            .setDescription("Loadout slot")
-            .setRequired(true)
-            .addChoices(
-              { name: "weapon", value: "weapon" },
-              { name: "armor", value: "armor" },
-              { name: "accessory", value: "accessory" },
-            ),
-        )
+        .setDescription("Equip an owned item by item ID.")
         .addStringOption((option) =>
           option
             .setName("item_id")
@@ -272,7 +262,7 @@ async function handleProfileSubcommand(
 ): Promise<void> {
   const profile = getGameProfile(guildId, interaction.user.id);
   await interaction.reply({
-    embeds: [buildProfileEmbed(profile, interaction.user.id)],
+    embeds: [buildProfileEmbed(profile, interaction.user)],
   });
 }
 
@@ -315,50 +305,31 @@ async function handleInventorySubcommand(
   guildId: string,
 ): Promise<void> {
   await interaction.deferReply({ flags: MessageFlags.Ephemeral });
-  const page = Math.max(1, interaction.options.getInteger("page") ?? 1);
+  const requestedPage = Math.max(
+    1,
+    interaction.options.getInteger("page") ?? 1,
+  );
   const inventory = getGameInventory(guildId, interaction.user.id);
 
-  if (inventory.items.length === 0) {
-    await interaction.editReply({
-      embeds: [
-        new EmbedBuilder()
-          .setTitle("🎒 Inventory")
-          .setDescription(
-            "You do not own any item yet. Use `/game spin` first.",
-          ),
-      ],
-    });
-    return;
-  }
+  const payload = buildInventoryPagePayload(inventory.items, {
+    viewerUserId: interaction.user.id,
+    page: requestedPage - 1,
+  });
 
-  const totalPages = Math.max(
-    1,
-    Math.ceil(inventory.items.length / INVENTORY_PAGE_SIZE),
-  );
-  const currentPage = Math.min(page, totalPages);
-  const start = (currentPage - 1) * INVENTORY_PAGE_SIZE;
-  const pageItems = inventory.items.slice(start, start + INVENTORY_PAGE_SIZE);
-
-  const embed = new EmbedBuilder()
-    .setTitle("🎒 Inventory")
-    .setDescription(pageItems.map(formatInventoryItem).join("\n"))
-    .setFooter({ text: `Page ${currentPage}/${totalPages}` });
-
-  await interaction.editReply({ embeds: [embed] });
+  await interaction.editReply(payload);
 }
 
 async function handleEquipSubcommand(
   interaction: ChatInputCommandInteraction,
   guildId: string,
 ): Promise<void> {
-  const slot = interaction.options.getString("slot", true) as EquipSlot;
   const itemId = interaction.options.getString("item_id", true).trim();
-  const profile = equipGameItem(guildId, interaction.user.id, slot, itemId);
+  const result = equipGameItemById(guildId, interaction.user.id, itemId);
 
   await interaction.reply({
     embeds: [
-      buildProfileEmbed(profile, interaction.user.id).setTitle(
-        `✅ Equipped ${slot}`,
+      buildProfileEmbed(result.profile, interaction.user).setTitle(
+        `✅ Equipped ${result.item.name} (${result.slot})`,
       ),
     ],
     flags: MessageFlags.Ephemeral,
@@ -374,7 +345,7 @@ async function handleUnequipSubcommand(
 
   await interaction.reply({
     embeds: [
-      buildProfileEmbed(profile, interaction.user.id).setTitle(
+      buildProfileEmbed(profile, interaction.user).setTitle(
         `🧹 Unequipped ${slot}`,
       ),
     ],
@@ -419,26 +390,95 @@ async function handleDuelSubcommand(
   }
 
   await interaction.deferReply();
+  const challengerLabel = formatUserLabel(interaction.user);
+  const opponentLabel = formatUserLabel(opponent);
+
+  const acceptCustomId = `game_duel_accept:${interaction.id}`;
+  const declineCustomId = `game_duel_decline:${interaction.id}`;
+
+  const challengeMessage = await interaction.editReply({
+    content: `<@${opponent.id}>, **${challengerLabel}** challenged you to a duel. Accept within **1 minute**.`,
+    components: [
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId(acceptCustomId)
+          .setLabel("Accept")
+          .setStyle(ButtonStyle.Success),
+        new ButtonBuilder()
+          .setCustomId(declineCustomId)
+          .setLabel("Decline")
+          .setStyle(ButtonStyle.Danger),
+      ),
+    ],
+  });
+
+  let decision;
+  try {
+    decision = await challengeMessage.awaitMessageComponent({
+      filter: (componentInteraction) =>
+        componentInteraction.user.id === opponent.id &&
+        (componentInteraction.customId === acceptCustomId ||
+          componentInteraction.customId === declineCustomId),
+      time: 60_000,
+    });
+  } catch {
+    await interaction.editReply({
+      content: `Duel request to **${opponentLabel}** expired after 1 minute.`,
+      embeds: [],
+      components: [],
+    });
+    return;
+  }
+
+  if (decision.customId === declineCustomId) {
+    await decision.update({
+      content: `**${opponentLabel}** declined the duel request.`,
+      embeds: [],
+      components: [],
+    });
+    return;
+  }
+
+  await decision.update({
+    content: `**${opponentLabel}** accepted the duel. Resolving match...`,
+    embeds: [],
+    components: [],
+  });
+
   const result = runGameDuel(guildId, interaction.user.id, opponent.id);
+  const winnerLabel =
+    result.winnerUserId === interaction.user.id
+      ? challengerLabel
+      : opponentLabel;
+  const duelLogs = formatDuelLogsForUsers(result.logs, [
+    {
+      userId: interaction.user.id,
+      label: challengerLabel,
+    },
+    {
+      userId: opponent.id,
+      label: opponentLabel,
+    },
+  ]);
 
   const summaryEmbed = new EmbedBuilder()
     .setTitle("⚔️ Duel Result")
     .setDescription(
       [
-        `<@${interaction.user.id}> vs <@${opponent.id}>`,
-        `Estimated win chance for <@${interaction.user.id}>: **${Math.round(result.estimatedWinChanceA * 100)}%**`,
-        `Winner: <@${result.winnerUserId}>`,
+        `${challengerLabel} vs ${opponentLabel}`,
+        `Estimated win chance for ${challengerLabel}: **${Math.round(result.estimatedWinChanceA * 100)}%**`,
+        `Winner: ${winnerLabel}`,
         `Rounds: **${result.roundCount}**`,
       ].join("\n"),
     )
     .addFields(
       {
-        name: `<@${interaction.user.id}>`,
+        name: challengerLabel,
         value: `BP: **${result.statsA.battlePower}**\nFinal HP: **${result.remainingHpA}**`,
         inline: true,
       },
       {
-        name: `<@${opponent.id}>`,
+        name: opponentLabel,
         value: `BP: **${result.statsB.battlePower}**\nFinal HP: **${result.remainingHpB}**`,
         inline: true,
       },
@@ -446,7 +486,7 @@ async function handleDuelSubcommand(
 
   await interaction.editReply({ embeds: [summaryEmbed] });
 
-  const payload = buildDuelLogPagePayload(result.logs, {
+  const payload = buildDuelLogPagePayload(duelLogs, {
     matchId: result.matchId,
     viewerUserId: interaction.user.id,
     page: 0,
@@ -475,7 +515,7 @@ async function handleLeaderboardSubcommand(
 
   const lines = leaderboard.map(
     (entry, index) =>
-      `${index + 1}. <@${entry.userId}> — Lv **${entry.level}** (EXP ${entry.exp})`,
+      `${index + 1}. <@${entry.userId}> (${entry.userId}) — Lv **${entry.level}** (EXP ${entry.exp})`,
   );
 
   await interaction.reply({
@@ -511,13 +551,14 @@ async function handleGiveTicketSubcommand(
   const target = interaction.options.getUser("target", true);
   const amount = interaction.options.getInteger("amount", true);
   const result = grantGameTickets(guildId, target.id, amount);
+  const targetLabel = formatUserLabel(target);
 
   await interaction.reply({
     embeds: [
       new EmbedBuilder()
         .setTitle("🎟️ Ticket Grant")
         .setDescription(
-          `Gave **${result.ticketsGiven}** tickets to <@${target.id}>.`,
+          `Gave **${result.ticketsGiven}** tickets to ${targetLabel}.`,
         )
         .addFields({
           name: "Target Resources",
@@ -530,7 +571,11 @@ async function handleGiveTicketSubcommand(
 
 function buildProfileEmbed(
   profile: ProfileResult,
-  userId: string,
+  user: {
+    id: string;
+    username: string;
+    globalName: string | null;
+  },
 ): EmbedBuilder {
   const weapon = profile.equippedItems.weapon;
   const armor = profile.equippedItems.armor;
@@ -538,7 +583,7 @@ function buildProfileEmbed(
 
   return new EmbedBuilder()
     .setTitle("🧙 Voicebound Profile")
-    .setDescription(`<@${userId}>`)
+    .setDescription(formatUserLabel(user))
     .addFields(
       {
         name: "Progress",
@@ -582,12 +627,37 @@ function formatLoadoutEntry(
   return `${item.name} (${item.id})`;
 }
 
-function formatInventoryItem(entry: InventoryItemView): string {
-  const slotTag = entry.equippedSlot ? ` [equipped:${entry.equippedSlot}]` : "";
-  return [
-    `• [${entry.item.rarity}] ${entry.item.name} (${entry.item.id})${slotTag}`,
-    `  ${entry.item.type} | ATK ${entry.item.atk >= 0 ? "+" : ""}${entry.item.atk} | DEF ${entry.item.def >= 0 ? "+" : ""}${entry.item.def} | HP ${entry.item.hp >= 0 ? "+" : ""}${entry.item.hp} | SPD ${entry.item.spd >= 0 ? "+" : ""}${entry.item.spd}`,
-  ].join("\n");
+function formatUserLabel(user: {
+  id: string;
+  username: string;
+  globalName: string | null;
+}): string {
+  const name = user.globalName ?? user.username;
+  return `${name} (${user.id})`;
+}
+
+function formatDuelLogsForUsers(
+  logs: string[],
+  users: Array<{
+    userId: string;
+    label: string;
+  }>,
+): string[] {
+  return logs.map((line) => {
+    let formattedLine = line;
+    for (const user of users) {
+      formattedLine = formattedLine.replaceAll(`<@${user.userId}>`, user.label);
+      formattedLine = formattedLine.replace(
+        new RegExp(`\\b${escapeRegex(user.userId)}\\b`, "g"),
+        user.label,
+      );
+    }
+    return formattedLine;
+  });
+}
+
+function escapeRegex(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 async function replyWithGameError(

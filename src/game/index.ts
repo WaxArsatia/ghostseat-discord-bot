@@ -15,6 +15,7 @@ import {
 } from "./application/VoiceProgressUseCase.js";
 import {
   equipItem,
+  equipItemById,
   getInventory,
   unequipSlot,
 } from "./application/InventoryLoadoutUseCase.js";
@@ -90,6 +91,16 @@ export function createGameRuntime() {
         guildId,
         userId,
         slot,
+        itemId,
+      ),
+    equipItemById: (guildId: string, userId: string, itemId: string) =>
+      equipItemById(
+        {
+          repository,
+          catalog,
+        },
+        guildId,
+        userId,
         itemId,
       ),
     unequipSlot: (guildId: string, userId: string, slot: EquipSlot) =>
@@ -180,6 +191,7 @@ export const gameVoiceTracker = gameRuntime.gameVoiceTracker;
 export const getGameProfile = gameRuntime.getProfile;
 export const getGameInventory = gameRuntime.getInventory;
 export const equipGameItem = gameRuntime.equipItem;
+export const equipGameItemById = gameRuntime.equipItemById;
 export const unequipGameSlot = gameRuntime.unequipSlot;
 export const spinGame = gameRuntime.spin;
 export const convertGameShards = gameRuntime.convertShards;

@@ -30,6 +30,12 @@ const slotToType: Record<EquipSlot, CatalogItem["type"]> = {
   accessory: "Accessory",
 };
 
+const typeToSlot: Record<CatalogItem["type"], EquipSlot> = {
+  Weapon: "weapon",
+  Armor: "armor",
+  Accessory: "accessory",
+};
+
 const rarityWeight: Record<CatalogItem["rarity"], number> = {
   Common: 1,
   Rare: 2,
@@ -47,6 +53,12 @@ export interface InventoryResult {
   player: PlayerProgress;
   loadout: ReturnType<InventoryLoadoutDeps["repository"]["getLoadout"]>;
   items: InventoryItemView[];
+}
+
+export interface EquipByItemIdResult {
+  profile: ProfileResult;
+  slot: EquipSlot;
+  item: CatalogItem;
 }
 
 export function getInventory(
@@ -99,18 +111,7 @@ export function equipItem(
 ): ProfileResult {
   return deps.repository.runInWriteTransaction(() => {
     deps.repository.ensurePlayer(guildId, userId);
-    const ownerships = deps.repository.listInventory(guildId, userId);
-    const ownsItem = ownerships.some(
-      (ownership) => ownership.itemId === itemId,
-    );
-    if (!ownsItem) {
-      throw createGameUserError("You do not own that item.");
-    }
-
-    const item = deps.catalog.getById(itemId);
-    if (!item) {
-      throw createGameUserError("Item is not present in the current catalog.");
-    }
+    const item = assertOwnedCatalogItem(deps, guildId, userId, itemId);
 
     const expectedType = slotToType[slot];
     if (item.type !== expectedType) {
@@ -128,6 +129,35 @@ export function equipItem(
       guildId,
       userId,
     );
+  });
+}
+
+export function equipItemById(
+  deps: InventoryLoadoutDeps,
+  guildId: string,
+  userId: string,
+  itemId: string,
+): EquipByItemIdResult {
+  return deps.repository.runInWriteTransaction(() => {
+    deps.repository.ensurePlayer(guildId, userId);
+    const item = assertOwnedCatalogItem(deps, guildId, userId, itemId);
+    const slot = typeToSlot[item.type];
+
+    deps.repository.setLoadoutSlot(guildId, userId, slot, item.id);
+    const profile = buildProfileSnapshot(
+      {
+        repository: deps.repository,
+        catalog: deps.catalog,
+      },
+      guildId,
+      userId,
+    );
+
+    return {
+      profile,
+      slot,
+      item,
+    };
   });
 }
 
@@ -160,4 +190,24 @@ function getEquippedSlot(
   if (loadout.armorItemId === itemId) return "armor";
   if (loadout.accessoryItemId === itemId) return "accessory";
   return null;
+}
+
+function assertOwnedCatalogItem(
+  deps: InventoryLoadoutDeps,
+  guildId: string,
+  userId: string,
+  itemId: string,
+): CatalogItem {
+  const ownerships = deps.repository.listInventory(guildId, userId);
+  const ownsItem = ownerships.some((ownership) => ownership.itemId === itemId);
+  if (!ownsItem) {
+    throw createGameUserError("You do not own that item.");
+  }
+
+  const item = deps.catalog.getById(itemId);
+  if (!item) {
+    throw createGameUserError("Item is not present in the current catalog.");
+  }
+
+  return item;
 }

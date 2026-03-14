@@ -99,7 +99,7 @@ export function runDuel(
 
     const logs = simulation.logs.map(
       (entry) =>
-        `R${entry.round} • <@${entry.attackerUserId}> hits <@${entry.defenderUserId}> for **${entry.damage}** dmg (HP: ${entry.remainingHp})`,
+        `R${entry.round} • ${entry.attackerUserId} hits ${entry.defenderUserId} for **${entry.damage}** dmg (HP: ${entry.remainingHp})`,
     );
 
     const winnerIsA = simulation.winnerUserId === challengerUserId;
@@ -178,7 +178,7 @@ function assertDuelCooldown(player: PlayerProgress, now: number): void {
 
   const waitSeconds = Math.ceil((DUEL_COOLDOWN_MS - elapsed) / 1000);
   throw createGameUserError(
-    `<@${player.userId}> is on duel cooldown for ${waitSeconds}s.`,
+    `User ${player.userId} is on duel cooldown for ${waitSeconds}s.`,
   );
 }
 

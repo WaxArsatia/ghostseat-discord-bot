@@ -2,7 +2,7 @@ import { Events, MessageFlags } from "discord.js";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { client } from "./client.js";
 import { commands } from "../commands/index.js";
-import { handleGameButtonInteraction } from "../game/application/GameInteractionHandlers.js";
+import { handleGameMessageComponentInteraction } from "../game/application/GameInteractionHandlers.js";
 import { gameVoiceTracker } from "../game/index.js";
 
 async function replyWithCommandError(
@@ -54,9 +54,10 @@ export function registerEventHandlers(): void {
   });
 
   client.on(Events.InteractionCreate, async (interaction) => {
-    if (interaction.isButton()) {
+    if (interaction.isButton() || interaction.isStringSelectMenu()) {
       try {
-        const handled = await handleGameButtonInteraction(interaction);
+        const handled =
+          await handleGameMessageComponentInteraction(interaction);
         if (handled) {
           return;
         }
@@ -67,7 +68,7 @@ export function registerEventHandlers(): void {
         });
         return;
       } catch (error) {
-        console.error("[Bot] Error handling button interaction:", error);
+        console.error("[Bot] Error handling component interaction:", error);
 
         try {
           const payload = {
@@ -88,7 +89,7 @@ export function registerEventHandlers(): void {
           }
         } catch (replyError) {
           console.error(
-            "[Bot] Failed to send button interaction error response:",
+            "[Bot] Failed to send component interaction error response:",
             replyError,
           );
         }
